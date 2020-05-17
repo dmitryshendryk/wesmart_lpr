@@ -1,3 +1,5 @@
 data
 weights
 .DS_Store
+notebooks/output
+./notebooks/output/metrics.json
