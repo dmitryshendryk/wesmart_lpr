@@ -1,3 +1,6 @@
+import torch 
+torch.cuda.set_device(0)
+
 from detectron2.engine import DefaultTrainer, DefaultPredictor
 from detectron2.utils.visualizer import Visualizer
 from detectron2.config import get_cfg 
@@ -18,7 +21,7 @@ ROOT = os.path.abspath('./')
 DATA_FOLDER = 'data/plates_with_json'
 CONFIG = 'config'
 WEIGHTS = 'weights'
-DEVICE = 'cpu'
+DEVICE = 'cuda'
 
 def get_carplate_dicts():
     path = os.path.join(ROOT, DATA_FOLDER)
@@ -73,7 +76,7 @@ cfg.DATASETS.TRAIN = ("carplate",)
 cfg.DATASETS.TEST = ()
 cfg.DATALOADER.NUM_WORKERS = 2
 cfg.MODEL.DEVICE = DEVICE
-cfg.MODEL.WEIGHTS = os.path.join(ROOT,WEIGHTS,"R-50.pkl")  # Let training initialize from model zoo
+cfg.MODEL.WEIGHTS = os.path.join(ROOT,WEIGHTS,"model_final.pth")  # Let training initialize from model zoo
 cfg.SOLVER.IMS_PER_BATCH = 2
 cfg.SOLVER.BASE_LR = 0.00025  # pick a good LR
 cfg.SOLVER.MAX_ITER = 300    # 300 iterations seems good enough for this toy dataset; you may need to train longer for a practical dataset
@@ -83,13 +86,9 @@ cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1  # only has one class (ballon)
 
 os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
 trainer = DefaultTrainer(cfg) 
-# trainer.resume_or_load(resume=False)
+trainer.resume_or_load(resume=False)
 # trainer.train()
 
-cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
-cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7   # set the testing threshold for this model
-cfg.DATASETS.TEST = ("carplate", )
-predictor = DefaultPredictor(cfg)
 
 from detectron2.evaluation import COCOEvaluator, inference_on_dataset
 from detectron2.data import build_detection_test_loader
