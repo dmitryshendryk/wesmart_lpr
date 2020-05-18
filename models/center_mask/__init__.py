@@ -1,0 +1,2 @@
+from .vovnet_config import add_vovnet_config
+from .model import build_vovnet_fpn_backbone, build_vovnet_backbone

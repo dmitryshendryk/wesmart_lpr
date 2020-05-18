@@ -3,3 +3,8 @@ weights
 .DS_Store
 notebooks/output
 ./notebooks/output/metrics.json
+models/center_mask/checkpoints
+models/mask_rcnn/checkpoints
+models/center_mask/__pycache__
+notebooks/.ipynb_checkpoints
+output
