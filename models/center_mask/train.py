@@ -131,7 +131,7 @@ def setup(args):
     cfg.merge_from_file(os.path.join(ROOT, CONFIG, "faster_rcnn_V_39_FPN_3x.yaml"))
     cfg.merge_from_list(args.opts)
     cfg.DATASETS.TRAIN = ("carplate",)
-    cfg.MODEL.DEVICE = 'gpu'
+    cfg.MODEL.DEVICE = 'cuda'
     cfg.MODEL.WEIGHTS = os.path.join(ROOT,WEIGHTS,"vovnet39_ese_detectron2.pth")
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1
     cfg.SOLVER.MAX_ITER = 3000
