@@ -132,6 +132,9 @@ def setup(args):
     cfg.merge_from_list(args.opts)
     cfg.DATASETS.TRAIN = ("carplate",)
     cfg.MODEL.DEVICE = 'cuda'
+    cfg.DATALOADER.NUM_WORKERS = 2
+    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128
+    cfg.SOLVER.IMS_PER_BATCH = 2
     cfg.MODEL.WEIGHTS = os.path.join(ROOT,WEIGHTS,"vovnet39_ese_detectron2.pth")
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1
     cfg.SOLVER.MAX_ITER = 3000
