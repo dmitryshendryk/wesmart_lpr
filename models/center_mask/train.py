@@ -22,7 +22,7 @@ from detectron2.data import MetadataCatalog
 from detectron2.structures import BoxMode
 
 import sys  
-sys.path.insert(0, '/Users/dmitry/Documents/Business/Projects/Upwork/Wesmart/wesmart_lpr')
+sys.path.insert(0, '/home/wesmart/Documents/apps/wesmart_lpr')
 
 from models.center_mask.vovnet_config import add_vovnet_config
 import cv2
@@ -131,7 +131,7 @@ def setup(args):
     cfg.merge_from_file(os.path.join(ROOT, CONFIG, "faster_rcnn_V_39_FPN_3x.yaml"))
     cfg.merge_from_list(args.opts)
     cfg.DATASETS.TRAIN = ("carplate",)
-    cfg.MODEL.DEVICE = 'gpu'
+    cfg.MODEL.DEVICE = 'cpu'
     cfg.MODEL.WEIGHTS = os.path.join(ROOT,WEIGHTS,"vovnet39_ese_detectron2.pth")
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1
     cfg.SOLVER.MAX_ITER = 3000
