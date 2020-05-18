@@ -165,7 +165,7 @@ def main(args):
 
     evaluator = COCOEvaluator("carplate", cfg, False, output_dir="./output/")
     val_loader = build_detection_test_loader(cfg, "carplate")
-    inference_on_dataset(trainer.model, val_loader, evaluator)
+    return inference_on_dataset(trainer.model, val_loader, evaluator)
 
 
 if __name__ == "__main__":
