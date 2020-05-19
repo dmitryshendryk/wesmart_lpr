@@ -131,6 +131,7 @@ def setup(args):
     cfg.merge_from_file(os.path.join(ROOT, CONFIG, "faster_rcnn_V_39_FPN_3x.yaml"))
     cfg.merge_from_list(args.opts)
     cfg.DATASETS.TRAIN = ("carplate",)
+    cfg.DATASETS.TEST = ()
     cfg.MODEL.DEVICE = 'cuda'
     cfg.DATALOADER.NUM_WORKERS = 2
     cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128
