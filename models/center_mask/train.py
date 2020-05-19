@@ -138,7 +138,7 @@ def setup(args):
     cfg.SOLVER.IMS_PER_BATCH = 2
     cfg.MODEL.WEIGHTS = os.path.join(ROOT,WEIGHTS,"vovnet39_ese_detectron2.pth")
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1
-    cfg.SOLVER.MAX_ITER = 30
+    cfg.SOLVER.MAX_ITER = 3000
     # cfg.freeze()
     default_setup(cfg, args)
     return cfg
