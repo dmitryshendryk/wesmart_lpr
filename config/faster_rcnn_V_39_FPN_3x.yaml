@@ -1,9 +1,0 @@
-_BASE_: "Base-RCNN-VoVNet-FPN.yaml"
-MODEL:
-  WEIGHTS: "./weights/vovnet39_ese_detectron2.pth"
-  MASK_ON: False
-  VOVNET:
-    CONV_BODY : "V-39-eSE"
-SOLVER:
-  STEPS: (210000, 250000)
-  MAX_ITER: 270000
