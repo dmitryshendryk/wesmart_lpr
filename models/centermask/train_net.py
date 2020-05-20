@@ -43,6 +43,7 @@ import json
 ROOT = os.path.abspath('../../')
 DATA_FOLDER = 'data/plates_with_json'
 CONFIG = 'config'
+WEIGHTS = 'weights'
 
 class Trainer(DefaultTrainer):
     """
@@ -262,6 +263,7 @@ def setup(args):
     cfg.SOLVER.MAX_ITER = 30000
     cfg.SOLVER.STEPS = (6000, 10000, 15000, 19000, 25000, 29000)
     cfg.SOLVER.BASE_LR = 0.00005
+    cfg.MODEL.WEIGHTS = os.path.join(ROOT,WEIGHTS,"vovnet57_ese_detectron2.pth")
     
     # cfg.freeze()
     default_setup(cfg, args)
