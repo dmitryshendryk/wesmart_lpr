@@ -189,13 +189,21 @@ class Trainer(DefaultTrainer):
         res = OrderedDict({k + "_TTA": v for k, v in res.items()})
         return res
 
-def get_carplate_dicts():
+def get_carplate_dicts(mode):
     path = os.path.join(ROOT, DATA_FOLDER)
     json_file = os.path.join(path, "dataset_mask_full_no_aug.json")
     with open(json_file) as f:
         imgs_anns = json.load(f)
     
     dataset_dicts = []
+    dataset_len = len(list(imgs_anns['_via_img_metadata'].values()))
+    dataset = list(imgs_anns['_via_img_metadata'].values())
+    if mode == 'train':
+        dataset = dataset[:dataset_len - int(dataset_len*0.1)]
+    elif mode == 'val':
+        dataset = dataset[dataset_len - int(dataset_len*0.1):]
+
+    print(len(dataset))
     for idx, v in enumerate(list(imgs_anns['_via_img_metadata'].values())):
         record = {}
         
@@ -238,11 +246,12 @@ def setup(args):
     """
 
 
-    dataset_dicts = get_carplate_dicts()
+    # dataset_dicts = get_carplate_dicts('val')
 
 
 
-    DatasetCatalog.register("carplate", get_carplate_dicts)
+    DatasetCatalog.register("carplate_train", lambda x='train':  get_carplate_dicts(x))
+    DatasetCatalog.register("carplate_val", lambda x='val':  get_carplate_dicts(x))
     # MetadataCatalog.get("carplate").set(thing_classes=["carplate"])
     # carplate_metadata = MetadataCatalog.get("carplate_train")
 
@@ -250,9 +259,10 @@ def setup(args):
     cfg.merge_from_file(args.config_file)
     cfg.merge_from_list(args.opts)
     
-    cfg.DATASETS.TRAIN = ("carplate",)
-    cfg.DATASETS.TEST = ()
-    cfg.MODEL.DEVICE = 'cuda'
+    cfg.DATASETS.TRAIN = ("carplate_train",)
+    cfg.DATASETS.TEST = ("carplate_val",)
+    cfg.MODEL.DEVICE = 'cpu'
+    cfg.TEST.EVAL_PERIOD = 100
     cfg.SOLVER.WARMUP_ITERS = 1000
     cfg.SOLVER.CHECKPOINT_PERIOD = 3000
     cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128
