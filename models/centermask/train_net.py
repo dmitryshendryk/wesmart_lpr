@@ -261,7 +261,7 @@ def setup(args):
     
     cfg.DATASETS.TRAIN = ("carplate_train",)
     cfg.DATASETS.TEST = ("carplate_val",)
-    cfg.MODEL.DEVICE = 'gpu'
+    cfg.MODEL.DEVICE = 'cuda'
     cfg.TEST.EVAL_PERIOD = 100
     cfg.SOLVER.WARMUP_ITERS = 1000
     cfg.SOLVER.CHECKPOINT_PERIOD = 3000
