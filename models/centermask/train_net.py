@@ -25,12 +25,12 @@ ROOT = os.path.abspath('../../')
 
 # sys.path.append(ROOT)
 
-from models.centermask.centermask.evaluation import COCOEvaluator
+from .centermask.evaluation import COCOEvaluator
 from detectron2.modeling import GeneralizedRCNNWithTTA
 
 from detectron2.data.dataset_mapper import DatasetMapper
-from models.centermask.centermask.config import get_cfg
-from models.centermask.centermask.checkpoint import AdetCheckpointer
+from .centermask.config import get_cfg
+from .centermask.checkpoint import AdetCheckpointer
 
 from detectron2.data import DatasetCatalog, MetadataCatalog
 
