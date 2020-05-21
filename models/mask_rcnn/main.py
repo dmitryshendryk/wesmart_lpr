@@ -90,6 +90,7 @@ def train():
     cfg.DATASETS.TEST = ("carplate_val")
     cfg.DATALOADER.NUM_WORKERS = 2
     cfg.MODEL.DEVICE = DEVICE
+    cfg.TEST.EVAL_PERIOD = 300
     cfg.MODEL.WEIGHTS = os.path.join(ROOT,WEIGHTS,"R-50.pkl")  # Let training initialize from model zoo
     cfg.SOLVER.IMS_PER_BATCH = 2
     cfg.SOLVER.BASE_LR = 0.00025  # pick a good LR
