@@ -17,7 +17,7 @@ ROOT = os.path.abspath('../../')
 DATA_FOLDER = 'data/plates_with_json'
 CONFIG = 'config'
 WEIGHTS = 'weights'
-DEVICE = 'cpu'
+DEVICE = 'cuda'
 
 
 def get_carplate_dicts(mode):
