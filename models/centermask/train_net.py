@@ -306,7 +306,8 @@ def main(args):
     consider writing your own training loop or subclassing the trainer.
     """
     trainer = Trainer(cfg)
-    trainer.test(cfg, trainer.model, evaluators=[COCOEvaluator])
+    trainer.build_evaluator(cfg,'carplate_val',output_folder="./output/")
+    # trainer.test(cfg, trainer.model, evaluators=[COCOEvaluator])
     trainer.resume_or_load(resume=args.resume)
     if cfg.TEST.AUG.ENABLED:
         trainer.register_hooks(
