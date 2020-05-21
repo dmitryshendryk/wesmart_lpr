@@ -22,6 +22,7 @@ from detectron2.evaluation import (
 
 import sys
 import json
+from collections import OrderedDict
 import os
 import random 
 import PIL
@@ -182,6 +183,22 @@ class Trainer(DefaultTrainer):
         if len(evaluator_list) == 1:
             return evaluator_list[0]
         return DatasetEvaluators(evaluator_list)
+    @classmethod
+    def test_with_TTA(cls, cfg, model):
+        logger = logging.getLogger("detectron2.trainer")
+        # In the end of training, run an evaluation with TTA
+        # Only support some R-CNN models.
+        logger.info("Running inference with test-time augmentation ...")
+        model = GeneralizedRCNNWithTTA(cfg, model)
+        evaluators = [
+            cls.build_evaluator(
+                cfg, name, output_folder=os.path.join(cfg.OUTPUT_DIR, "inference_TTA")
+            )
+            for name in cfg.DATASETS.TEST
+        ]
+        res = cls.test(cfg, model, evaluators)
+        res = OrderedDict({k + "_TTA": v for k, v in res.items()})
+        return res
 
 
 
@@ -261,7 +278,6 @@ def train(args):
     cfg.SOLVER.MAX_ITER = 30000
     cfg.SOLVER.STEPS = (6000, 10000, 15000, 19000, 25000, 29000)
     cfg.SOLVER.BASE_LR = 0.00005   # faster, and good enough for this toy dataset (default: 512)
-    cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1  # only has one class (ballon)
 
 
 
@@ -275,6 +291,10 @@ def train(args):
     trainer.build_evaluator(cfg,'carplate_val',output_folder="./output/")
 
     trainer.resume_or_load(resume=False)
+    if cfg.TEST.AUG.ENABLED:
+        trainer.register_hooks(
+            [hooks.EvalHook(0, lambda: trainer.test_with_TTA(cfg, trainer.model))]
+        )
     return trainer.train()
 
 if __name__ == "__main__":
