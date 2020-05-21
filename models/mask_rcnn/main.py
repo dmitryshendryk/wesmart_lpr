@@ -35,8 +35,8 @@ ROOT = os.path.abspath('../')
 
 sys.path.append(ROOT)
 
-from centermask.centermask.evaluation import COCOEvaluator
-from centermask.centermask.checkpoint import AdetCheckpointer
+from centermask.centermask.evaluation.coco_evaluation import COCOEvaluator
+from centermask.centermask.checkpoint.adet_checkpoint import AdetCheckpointer
 from detectron2.modeling import GeneralizedRCNNWithTTA
 
 from detectron2.data.dataset_mapper import DatasetMapper
