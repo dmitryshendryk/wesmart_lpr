@@ -245,7 +245,7 @@ class Trainer(DefaultTrainer):
 
 
 
-def train(args):
+def main(args):
 
     # dataset_dicts = get_carplate_dicts()
 
@@ -301,7 +301,7 @@ if __name__ == "__main__":
     args = default_argument_parser().parse_args()
     print("Command Line Args:", args)
     launch(
-        train,
+        main,
         args.num_gpus,
         num_machines=args.num_machines,
         machine_rank=args.machine_rank,
