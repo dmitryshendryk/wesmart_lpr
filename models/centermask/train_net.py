@@ -23,7 +23,7 @@ import sys
 
 ROOT = os.path.abspath('../../')
 
-sys.path.append(ROOT)
+# sys.path.append(ROOT)
 
 from models.centermask.centermask.evaluation import COCOEvaluator
 from detectron2.modeling import GeneralizedRCNNWithTTA
