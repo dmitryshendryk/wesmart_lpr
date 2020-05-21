@@ -114,12 +114,16 @@ def train():
     cfg.DATASETS.TEST = ("carplate_val",)
     cfg.DATALOADER.NUM_WORKERS = 2
     cfg.MODEL.DEVICE = DEVICE
-    cfg.TEST.EVAL_PERIOD = 300
+    cfg.TEST.EVAL_PERIOD = 1000
+    cfg.SOLVER.WARMUP_ITERS = 1000
+    cfg.SOLVER.CHECKPOINT_PERIOD = 3000
     cfg.MODEL.WEIGHTS = os.path.join(ROOT,WEIGHTS,"R-50.pkl")  # Let training initialize from model zoo
     cfg.SOLVER.IMS_PER_BATCH = 2
+    cfg.SOLVER.GAMMA = 0.05
+    cfg.SOLVER.STEPS = (6000, 10000, 15000, 19000, 25000, 29000)
     cfg.SOLVER.BASE_LR = 0.00025  # pick a good LR
     cfg.SOLVER.MAX_ITER = 30000    # 300 iterations seems good enough for this toy dataset; you may need to train longer for a practical dataset
-    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128   # faster, and good enough for this toy dataset (default: 512)
+    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 256   # faster, and good enough for this toy dataset (default: 512)
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1  # only has one class (ballon)
 
 
