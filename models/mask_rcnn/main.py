@@ -228,7 +228,7 @@ class Trainer(DefaultTrainer):
 
 
 
-def train():
+def train(args):
 
     # dataset_dicts = get_carplate_dicts()
 
