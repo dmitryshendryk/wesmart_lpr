@@ -126,7 +126,7 @@ def train():
 
     os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
     trainer = Trainer(cfg) 
-    trainer.build_evaluator()
+    trainer.build_evaluator(cfg,'carplate_val',output_folder="./output/")
     trainer.resume_or_load(resume=False)
     trainer.train()
 
