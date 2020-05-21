@@ -74,7 +74,7 @@ def get_carplate_dicts(mode):
 
 def train():
 
-    dataset_dicts = get_carplate_dicts()
+    # dataset_dicts = get_carplate_dicts()
 
     DatasetCatalog.register("carplate_train", lambda x='train':  get_carplate_dicts(x))
     DatasetCatalog.register("carplate_val", lambda x='val':  get_carplate_dicts(x))
