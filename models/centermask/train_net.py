@@ -255,6 +255,8 @@ def setup(args):
     # MetadataCatalog.get("carplate").set(thing_classes=["carplate"])
     # carplate_metadata = MetadataCatalog.get("carplate_train")
 
+    MetadataCatalog.get("carplate_val").set(evaluator_type=["car"])
+
     cfg = get_cfg()
     cfg.merge_from_file(args.config_file)
     cfg.merge_from_list(args.opts)
