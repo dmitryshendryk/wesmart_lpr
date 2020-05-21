@@ -204,7 +204,7 @@ def get_carplate_dicts(mode):
         dataset = dataset[dataset_len - int(dataset_len*0.1):]
 
     print(len(dataset))
-    for idx, v in enumerate(list(imgs_anns['_via_img_metadata'].values())):
+    for idx, v in enumerate(list(dataset)):
         record = {}
         
         filename = os.path.join(path, v["filename"])
