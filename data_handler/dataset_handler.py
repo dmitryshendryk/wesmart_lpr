@@ -7,10 +7,8 @@ from detectron2.structures import BoxMode
 
 
 
-
-
-def get_carplate_dicts():
-
+ 
+def get_carplate_dicts(mode):
     ROOT = os.path.abspath('../')
     DATA_FOLDER = 'data'
     path = os.path.join(ROOT, DATA_FOLDER)
@@ -19,7 +17,15 @@ def get_carplate_dicts():
         imgs_anns = json.load(f)
     
     dataset_dicts = []
-    for idx, v in enumerate(list(imgs_anns['_via_img_metadata'].values())):
+    dataset_len = len(list(imgs_anns['_via_img_metadata'].values()))
+    dataset = list(imgs_anns['_via_img_metadata'].values())
+    if mode == 'train':
+        dataset = dataset[:dataset_len - int(dataset_len*0.1)]
+    elif mode == 'val':
+        dataset = dataset[dataset_len - int(dataset_len*0.1):]
+
+    print(len(dataset))
+    for idx, v in enumerate(list(dataset)):
         record = {}
         
         filename = os.path.join(path, v["filename"])
