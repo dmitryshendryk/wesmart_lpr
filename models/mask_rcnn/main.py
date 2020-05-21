@@ -31,12 +31,12 @@ import cv2
 import numpy as np
 import logging
 
-ROOT = os.path.abspath('../../')
+ROOT = os.path.abspath('../')
 
 sys.path.append(ROOT)
 
-from ..centermask.centermask.evaluation import COCOEvaluator
-from ..centermask.centermask.checkpoint import AdetCheckpointer
+from centermask.centermask.evaluation import COCOEvaluator
+from centermask.centermask.checkpoint import AdetCheckpointer
 from detectron2.modeling import GeneralizedRCNNWithTTA
 
 from detectron2.data.dataset_mapper import DatasetMapper
