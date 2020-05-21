@@ -252,7 +252,7 @@ def setup(args):
 
     DatasetCatalog.register("carplate_train", lambda x='train':  get_carplate_dicts(x))
     DatasetCatalog.register("carplate_val", lambda x='val':  get_carplate_dicts(x))
-    # MetadataCatalog.get("carplate").set(thing_classes=["carplate"])
+    MetadataCatalog.get("carplate_val").set(thing_classes=["carplate"])
     # carplate_metadata = MetadataCatalog.get("carplate_train")
 
     MetadataCatalog.get("carplate_val").set(evaluator_type='coco')
