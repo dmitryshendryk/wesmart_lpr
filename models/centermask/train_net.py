@@ -19,18 +19,24 @@ from detectron2.evaluation import (
     SemSegEvaluator,
     verify_results,
 )
-from centermask.evaluation import COCOEvaluator
+import sys
+
+ROOT = os.path.abspath('../../')
+
+sys.path.append(ROOT)
+
+from models.centermask.centermask.evaluation import COCOEvaluator
 from detectron2.modeling import GeneralizedRCNNWithTTA
 
 from detectron2.data.dataset_mapper import DatasetMapper
-from centermask.config import get_cfg
-from centermask.checkpoint import AdetCheckpointer
+from models.centermask.centermask.config import get_cfg
+from models.centermask.centermask.checkpoint import AdetCheckpointer
 
 from detectron2.data import DatasetCatalog, MetadataCatalog
 
 import json
 import os
-import sys
+
 import random 
 import PIL
 import matplotlib.pyplot as plt 
