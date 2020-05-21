@@ -28,6 +28,8 @@ import sys
 from centermask.evaluation import COCOEvaluator
 from detectron2.modeling import GeneralizedRCNNWithTTA
 
+from detectron2.data.
+
 from detectron2.data.dataset_mapper import DatasetMapper
 from centermask.config import get_cfg
 from centermask.checkpoint import AdetCheckpointer

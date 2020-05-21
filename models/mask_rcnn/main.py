@@ -4,6 +4,9 @@ from detectron2.config import get_cfg
 from detectron2.structures import BoxMode
 from detectron2.data import DatasetCatalog, MetadataCatalog
 
+from detectron2.evaluation import COCOEvaluator, inference_on_dataset
+from detectron2.evaluation import DatasetEvaluators
+
 import json
 import os
 import sys
@@ -18,6 +21,27 @@ DATA_FOLDER = 'data/plates_with_json'
 CONFIG = 'config'
 WEIGHTS = 'weights'
 DEVICE = 'cuda'
+
+class Trainer(DefaultTrainer):
+
+    @classmethod
+    def build_evaluator(cls, cfg, dataset_name, output_folder=None):
+        """
+        Create evaluator(s) for a given dataset.
+        This uses the special metadata "evaluator_type" associated with each builtin dataset.
+        For your own dataset, you can simply create an evaluator manually in your
+        script and do not have to worry about the hacky if-else logic here.
+        """
+        if output_folder is None:
+            output_folder = os.path.join(cfg.OUTPUT_DIR, "inference")
+        evaluator_list = []
+        evaluator_type = MetadataCatalog.get(dataset_name).evaluator_type
+       
+        if evaluator_type in ["coco", "coco_panoptic_seg"]:
+            evaluator_list.append(COCOEvaluator(dataset_name, cfg, True, output_folder))
+       
+
+        return DatasetEvaluators(evaluator_list)
 
 
 def get_carplate_dicts(mode):
@@ -101,7 +125,7 @@ def train():
 
 
     os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
-    trainer = DefaultTrainer(cfg) 
+    trainer = Trainer(cfg) 
     # trainer.build_evaluator()
     trainer.resume_or_load(resume=False)
     trainer.train()
