@@ -20,28 +20,35 @@ from detectron2.evaluation import (
     verify_results,
 )
 
+import sys
+import json
+import os
+import random 
+import PIL
+import matplotlib.pyplot as plt 
+import cv2
+import numpy as np
 import logging
-from ..centermask.centermask.evaluation import COCOEvaluator
-from ..centermask.centermask.checkpoint import AdetCheckpointer
+
+ROOT = os.path.abspath('../../')
+
+sys.path.append(ROOT)
+
+
+from models.centermask.centermask.evaluation import COCOEvaluator
+from models.centermask.centermask.checkpoint import AdetCheckpointer
 from detectron2.modeling import GeneralizedRCNNWithTTA
 
 from detectron2.data.dataset_mapper import DatasetMapper
 
 from detectron2.data import DatasetCatalog, MetadataCatalog
 
-from ...data_handler.dataset_handler import get_carplate_dicts
+from data_handler.dataset_handler import get_carplate_dicts
 
 
-import json
-import os
-import sys
-import random 
-import PIL
-import matplotlib.pyplot as plt 
-import cv2
-import numpy as np
 
-ROOT = os.path.abspath('../../')
+
+
 DATA_FOLDER = 'data/plates_with_json'
 CONFIG = 'config'
 WEIGHTS = 'weights'
