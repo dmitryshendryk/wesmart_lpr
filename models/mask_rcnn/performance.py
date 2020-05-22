@@ -82,7 +82,7 @@ cfg.DATASETS.TRAIN = ("carplate_train",)
 cfg.DATASETS.TEST = ("carplate_val",)
 cfg.DATALOADER.NUM_WORKERS = 2
 cfg.MODEL.DEVICE = DEVICE
-cfg.MODEL.WEIGHTS = os.path.join(ROOT,WEIGHTS,"R-50.pkl")  # Let training initialize from model zoo
+cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "maskrcnn_model_final_20200522.pth")
 cfg.SOLVER.IMS_PER_BATCH = 2
 cfg.SOLVER.BASE_LR = 0.00025  # pick a good LR
 cfg.SOLVER.MAX_ITER = 300    # 300 iterations seems good enough for this toy dataset; you may need to train longer for a practical dataset
@@ -95,7 +95,6 @@ trainer = DefaultTrainer(cfg)
 # trainer.resume_or_load(resume=False)
 # trainer.train()
 
-cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "maskrcnn_model_final_20200522.pth")
 cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7   # set the testing threshold for this model
 cfg.DATASETS.TEST = ("carplate_val", )
 predictor = DefaultPredictor(cfg)
