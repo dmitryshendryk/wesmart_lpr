@@ -13,12 +13,11 @@ import matplotlib.pyplot as plt
 import cv2
 import numpy as np
 
-ROOT = os.path.abspath('../')
+ROOT = os.path.abspath('../../')
 DATA_FOLDER = 'data/plates_with_json'
 CONFIG = 'config'
 WEIGHTS = 'weights'
 DEVICE = 'cuda'
-
 
 def get_carplate_dicts(mode):
     path = os.path.join(ROOT, DATA_FOLDER)
