@@ -77,7 +77,7 @@ MetadataCatalog.get("carplate_val").set(evaluator_type='coco')
 
 
 cfg = get_cfg()
-cfg.merge_from_file(os.path.join(ROOT, CONFIG, "centermask_V_57_eSE_FPN_ms_3x.yaml"))
+# cfg.merge_from_file(os.path.join(ROOT, CONFIG, "centermask_V_57_eSE_FPN_ms_3x.yaml"))
 cfg.DATASETS.TRAIN = ("carplate_train",)
 cfg.DATASETS.TEST = ("carplate_val",)
 cfg.DATALOADER.NUM_WORKERS = 2
