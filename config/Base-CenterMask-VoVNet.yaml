@@ -12,7 +12,7 @@ MODEL:
   FCOS:
     POST_NMS_TOPK_TEST: 50
   # PIXEL_MEAN: [102.9801, 115.9465, 122.7717]
-  MASK_ON: True
+  MASK_ON: False
   MASKIOU_ON: False
   ROI_HEADS:
     NAME: "CenterROIHeads"
