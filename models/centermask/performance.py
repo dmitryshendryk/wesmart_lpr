@@ -19,6 +19,8 @@ CONFIG = 'config'
 WEIGHTS = 'weights'
 DEVICE = 'cuda'
 
+sys.path.append(ROOT)
+
 from data_handler.dataset_handler import get_carplate_dicts
 
 # def get_carplate_dicts(mode):
