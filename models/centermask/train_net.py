@@ -271,10 +271,10 @@ def setup(args):
     cfg.DATASETS.TRAIN = ("carplate_train",)
     cfg.DATASETS.TEST = ("carplate_val",)
     cfg.MODEL.DEVICE = 'cuda'
-    cfg.TEST.EVAL_PERIOD = 300
+    cfg.TEST.EVAL_PERIOD = 1000
     cfg.SOLVER.WARMUP_ITERS = 1000
     cfg.SOLVER.CHECKPOINT_PERIOD = 3000
-    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128
+    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 256
     cfg.DATALOADER.NUM_WORKERS = 2
     cfg.SOLVER.IMS_PER_BATCH = 1
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1
@@ -315,7 +315,7 @@ def main(args):
     trainer = Trainer(cfg)
     trainer.build_evaluator(cfg,'carplate_val',output_folder="./output/")
 
-    trainer.resume_or_load(resume=args.resume)
+    trainer.resume_or_load(resume=False)
     if cfg.TEST.AUG.ENABLED:
         trainer.register_hooks(
             [hooks.EvalHook(0, lambda: trainer.test_with_TTA(cfg, trainer.model))]
