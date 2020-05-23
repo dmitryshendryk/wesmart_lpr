@@ -24,52 +24,18 @@ CONFIG = 'config'
 WEIGHTS = 'weights'
 DEVICE = 'cuda'
 
-def get_carplate_dicts():
-    path = os.path.join(ROOT, DATA_FOLDER)
-    json_file = os.path.join(path, "dataset_mask_full_no_aug.json")
-    with open(json_file) as f:
-        imgs_anns = json.load(f)
-    
-    dataset_dicts = []
-    for idx, v in enumerate(list(imgs_anns['_via_img_metadata'].values())):
-        record = {}
-        
-        filename = os.path.join(path, v["filename"])
-        height, width = cv2.imread(filename).shape[:2]
-        
-        record["file_name"] = filename
-        record["image_id"] = idx
-        record["height"] = height
-        record["width"] = width
-      
-        annos = v["regions"]
-        objs = []
-        for anno in annos:
-            assert not anno["region_attributes"]
-            anno = anno["shape_attributes"]
-            px = anno["all_points_x"]
-            py = anno["all_points_y"]
-            poly = [(x + 0.5, y + 0.5) for x, y in zip(px, py)]
-            poly = [p for x in poly for p in x]
+sys.path.append(ROOT)
 
-            obj = {
-                "bbox": [np.min(px), np.min(py), np.max(px), np.max(py)],
-                "bbox_mode": BoxMode.XYXY_ABS,
-                "segmentation": [poly],
-                "category_id": 0,
-                "iscrowd": 0
-            }
-            objs.append(obj)
-        record["annotations"] = objs
-        dataset_dicts.append(record)
-    return dataset_dicts
-
-dataset_dicts = get_carplate_dicts()
+from data_handler.dataset_handler import get_carplate_dicts
 
 
-DatasetCatalog.register("carplate", lambda : get_carplate_dicts())
-MetadataCatalog.get("carplate").set(thing_classes=["carplate"])
-carplate_metadata = MetadataCatalog.get("carplate_train")
+
+DatasetCatalog.register("carplate_train", lambda x='train':  get_carplate_dicts(x, ROOT))
+DatasetCatalog.register("carplate_val", lambda x='val':  get_carplate_dicts(x, ROOT))
+MetadataCatalog.get("carplate_val").set(thing_classes=["carplate"])
+# carplate_metadata = MetadataCatalog.get("carplate_train")
+
+MetadataCatalog.get("carplate_val").set(evaluator_type='coco')
 
 cfg = get_cfg()
 cfg.merge_from_file(os.path.join(ROOT, CONFIG, "mask_rcnn_R_50_FPN_3x.yaml"))
@@ -93,7 +59,7 @@ trainer.resume_or_load(resume=False)
 
 from detectron2.evaluation import COCOEvaluator, inference_on_dataset
 from detectron2.data import build_detection_test_loader
-evaluator = COCOEvaluator("carplate", cfg, False, output_dir="./output/")
-val_loader = build_detection_test_loader(cfg, "carplate")
+evaluator = COCOEvaluator("carplate_val", cfg, False, output_dir="./output/")
+val_loader = build_detection_test_loader(cfg, "carplate_val")
 inference_on_dataset(trainer.model, val_loader, evaluator)
 # another equivalent way is to use trainer.test
