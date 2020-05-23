@@ -271,7 +271,7 @@ def setup(args):
     cfg.DATASETS.TRAIN = ("carplate_train",)
     cfg.DATASETS.TEST = ("carplate_val",)
     cfg.MODEL.DEVICE = 'cuda'
-    cfg.TEST.EVAL_PERIOD = 1000
+    cfg.TEST.EVAL_PERIOD = 300
     cfg.SOLVER.WARMUP_ITERS = 1000
     cfg.SOLVER.CHECKPOINT_PERIOD = 3000
     cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128
