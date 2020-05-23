@@ -8,7 +8,7 @@ from detectron2.structures import BoxMode
 
 
 
-def get_carplate_dicts(mode, root_path):
+def get_carplate_dicts(mode, root_path, test_split=0.1):
     path = os.path.join(root_path, 'data/plates_with_json')
     json_file = os.path.join(path, "dataset_mask_full_no_aug.json")
     print(json_file)
@@ -19,9 +19,9 @@ def get_carplate_dicts(mode, root_path):
     dataset_len = len(list(imgs_anns['_via_img_metadata'].values()))
     dataset = list(imgs_anns['_via_img_metadata'].values())
     if mode == 'train':
-        dataset = dataset[:dataset_len - int(dataset_len*0.1)]
+        dataset = dataset[:dataset_len - int(dataset_len*test_split)]
     elif mode == 'val':
-        dataset = dataset[dataset_len - int(dataset_len*0.1):]
+        dataset = dataset[dataset_len - int(dataset_len*test_split):]
 
     print(len(dataset))
     for idx, v in enumerate(list(dataset)):

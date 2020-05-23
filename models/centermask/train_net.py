@@ -257,8 +257,8 @@ def setup(args):
 
 
 
-    DatasetCatalog.register("carplate_train", lambda x='train':  get_carplate_dicts(x, ROOT))
-    DatasetCatalog.register("carplate_val", lambda x='val':  get_carplate_dicts(x, ROOT))
+    DatasetCatalog.register("carplate_train", lambda x='train':  get_carplate_dicts(x, ROOT,0.05))
+    DatasetCatalog.register("carplate_val", lambda x='val':  get_carplate_dicts(x, ROOT,0.05))
     MetadataCatalog.get("carplate_val").set(thing_classes=["carplate"])
     # carplate_metadata = MetadataCatalog.get("carplate_train")
 
@@ -269,7 +269,7 @@ def setup(args):
     cfg.merge_from_list(args.opts)
     
     cfg.DATASETS.TRAIN = ("carplate_train",)
-    cfg.DATASETS.TEST = ()
+    cfg.DATASETS.TEST = ("carplate_val",)
     cfg.MODEL.DEVICE = 'cuda'
     cfg.TEST.EVAL_PERIOD = 1000
     cfg.SOLVER.WARMUP_ITERS = 1000
