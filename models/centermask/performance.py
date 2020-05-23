@@ -72,8 +72,8 @@ from data_handler.dataset_handler import get_carplate_dicts
 #     return dataset_dicts
 
 
-DatasetCatalog.register("carplate_train", lambda x='train':  get_carplate_dicts(x))
-DatasetCatalog.register("carplate_val", lambda x='val':  get_carplate_dicts(x))
+DatasetCatalog.register("carplate_train", lambda x='train':  get_carplate_dicts(x, ROOT))
+DatasetCatalog.register("carplate_val", lambda x='val':  get_carplate_dicts(x, ROOT))
 MetadataCatalog.get("carplate_val").set(thing_classes=["carplate"])
 carplate_metadata = MetadataCatalog.get("carplate_val")
 
