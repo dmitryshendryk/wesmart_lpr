@@ -105,7 +105,7 @@ predictor = DefaultPredictor(cfg)
 
 import time
 times = []
-dataset_dicts = get_carplate_dicts('val')
+dataset_dicts = get_carplate_dicts('val'), ROOT
 im = cv2.imread(dataset_dicts[0]["file_name"])
 for i in range(20):
     start_time = time.time()
