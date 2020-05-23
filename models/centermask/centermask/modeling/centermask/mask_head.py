@@ -150,6 +150,7 @@ def mask_rcnn_loss(pred_mask_logits, instances, maskiou_on):
         mask_ratios = cat(mask_ratios, dim=0)
 
         value_eps = 1e-10 * torch.ones(gt_masks.shape[0], device=gt_masks.device)
+        mask_ratios = mask_ratios.float()
         print(mask_ratios.type())
         print(value_eps.type())
         mask_ratios = torch.max(mask_ratios, value_eps)
