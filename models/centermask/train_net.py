@@ -269,7 +269,7 @@ def setup(args):
     cfg.merge_from_list(args.opts)
     
     cfg.DATASETS.TRAIN = ("carplate_train",)
-    cfg.DATASETS.TEST = ("carplate_val",)
+    cfg.DATASETS.TEST = ()
     cfg.MODEL.DEVICE = 'cuda'
     cfg.TEST.EVAL_PERIOD = 1000
     cfg.SOLVER.WARMUP_ITERS = 1000
