@@ -58,5 +58,5 @@ class BasicDataset(Dataset):
 
         img = self.preprocess(img, self.scale)
         mask = self.preprocess(mask, self.scale)
-
+        print(img_file, mask_file)
         return {'image': torch.from_numpy(img), 'mask': torch.from_numpy(mask)}
