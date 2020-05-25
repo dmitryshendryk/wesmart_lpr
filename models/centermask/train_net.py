@@ -257,8 +257,8 @@ def setup(args):
 
 
 
-    DatasetCatalog.register("carplate_train", lambda x='train':  get_carplate_dicts(x, ROOT,0.02))
-    DatasetCatalog.register("carplate_val", lambda x='val':  get_carplate_dicts(x, ROOT,0.02))
+    DatasetCatalog.register("carplate_train", lambda x='train':  get_carplate_dicts(x, ROOT,0.01))
+    DatasetCatalog.register("carplate_val", lambda x='val':  get_carplate_dicts(x, ROOT,0.01))
     MetadataCatalog.get("carplate_val").set(thing_classes=["carplate"])
     # carplate_metadata = MetadataCatalog.get("carplate_train")
 
@@ -274,7 +274,7 @@ def setup(args):
     cfg.TEST.EVAL_PERIOD = 1000
     cfg.SOLVER.WARMUP_ITERS = 1000
     cfg.SOLVER.CHECKPOINT_PERIOD = 3000
-    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128
+    cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 64
     cfg.DATALOADER.NUM_WORKERS = 2
     cfg.SOLVER.IMS_PER_BATCH = 1
     cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1
