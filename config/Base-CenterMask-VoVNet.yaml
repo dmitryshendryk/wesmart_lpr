@@ -14,8 +14,8 @@ MODEL:
   FPN:
     IN_FEATURES: ["res2", "res3", "res4", "res5"]
 
-  PROPOSAL_GENERATOR:
-    NAME: "FCOS"  
+  # PROPOSAL_GENERATOR:
+  #   NAME: "FCOS"  
   # FCOS:
   #   POST_NMS_TOPK_TEST: 50
   # PIXEL_MEAN: [102.9801, 115.9465, 122.7717]
