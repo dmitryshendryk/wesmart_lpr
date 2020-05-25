@@ -13,7 +13,7 @@ MODEL:
     OUT_FEATURES: ["res2", "res3", "res4", "res5"]
   FPN:
     IN_FEATURES: ["res2", "res3", "res4", "res5"]
-    
+
   PROPOSAL_GENERATOR:
     NAME: "FCOS"  
   FCOS:
@@ -24,7 +24,7 @@ MODEL:
   ROI_HEADS:
     NAME: "CenterROIHeads"
     # IN_FEATURES: ["p3", "p4", "p5"]
-    IN_FEATURES: ["p2","p3", "p4", "p5","p6"]
+    IN_FEATURES: ["p2","p3", "p4", "p5","p6","p7"]
   ROI_MASK_HEAD:
     NAME: "SpatialAttentionMaskHead"
     ASSIGN_CRITERION: "ratio"
