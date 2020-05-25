@@ -140,7 +140,7 @@ def get_args():
                         help='Load model from a .pth file')
     parser.add_argument('-s', '--scale', dest='scale', type=float, default=1.0,
                         help='Downscaling factor of the images')
-    parser.add_argument('-v', '--validation', dest='val', type=float, default=1.0,
+    parser.add_argument('-v', '--validation', dest='val', type=float, default=0.01,
                         help='Percent of the data that is used as validation (0-100)')
 
     return parser.parse_args()
