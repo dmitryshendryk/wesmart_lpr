@@ -257,8 +257,8 @@ def setup(args):
 
 
 
-    DatasetCatalog.register("carplate_train", lambda x='train':  get_carplate_dicts(x, ROOT,0.05))
-    DatasetCatalog.register("carplate_val", lambda x='val':  get_carplate_dicts(x, ROOT,0.05))
+    DatasetCatalog.register("carplate_train", lambda x='train':  get_carplate_dicts(x, ROOT,0.02))
+    DatasetCatalog.register("carplate_val", lambda x='val':  get_carplate_dicts(x, ROOT,0.02))
     MetadataCatalog.get("carplate_val").set(thing_classes=["carplate"])
     # carplate_metadata = MetadataCatalog.get("carplate_train")
 
