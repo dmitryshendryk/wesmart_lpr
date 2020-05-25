@@ -16,7 +16,7 @@ MODEL:
   MASKIOU_ON: True
   ROI_HEADS:
     NAME: "CenterROIHeads"
-    IN_FEATURES: ["p3", "p4", "p5"]
+    IN_FEATURES: ["p2","p3", "p4", "p5","p6"]
   ROI_MASK_HEAD:
     NAME: "SpatialAttentionMaskHead"
     ASSIGN_CRITERION: "ratio"
