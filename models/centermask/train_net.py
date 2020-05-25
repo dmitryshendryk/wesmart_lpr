@@ -282,7 +282,7 @@ def setup(args):
     cfg.SOLVER.MAX_ITER = 30000
     cfg.SOLVER.STEPS = (6000, 10000, 15000, 19000, 25000, 29000)
     cfg.SOLVER.BASE_LR = 0.00005
-    cfg.MODEL.WEIGHTS = os.path.join(ROOT,WEIGHTS,"vovnet99_ese_detectron2.pth")
+    cfg.MODEL.WEIGHTS = os.path.join(ROOT,WEIGHTS,"X-101-32x8d.pkl")
     
     # cfg.freeze()
     default_setup(cfg, args)
