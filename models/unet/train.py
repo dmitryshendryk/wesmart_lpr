@@ -24,11 +24,11 @@ dir_checkpoint = 'checkpoints/'
 def train_net(net,
               device,
               epochs=5,
-              batch_size=0.1,
+              batch_size=1,
               lr=0.001,
               val_percent=0.01,
               save_cp=True,
-              img_scale=0.5):
+              img_scale=0.2):
 
     dataset = BasicDataset(dir_img, dir_mask, img_scale)
     n_val = int(len(dataset) * val_percent)
