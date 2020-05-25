@@ -16,15 +16,15 @@ MODEL:
 
   PROPOSAL_GENERATOR:
     NAME: "FCOS"  
-  FCOS:
-    POST_NMS_TOPK_TEST: 50
+  # FCOS:
+  #   POST_NMS_TOPK_TEST: 50
   # PIXEL_MEAN: [102.9801, 115.9465, 122.7717]
   MASK_ON: True
   MASKIOU_ON: True
   ROI_HEADS:
     NAME: "CenterROIHeads"
     # IN_FEATURES: ["p3", "p4", "p5"]
-    IN_FEATURES: ["p3", "p4", "p5"]
+    IN_FEATURES: ["p2","p3", "p4", "p5","p6","p7"]
   ROI_MASK_HEAD:
     NAME: "SpatialAttentionMaskHead"
     ASSIGN_CRITERION: "ratio"
