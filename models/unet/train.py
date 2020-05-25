@@ -77,7 +77,7 @@ def train_net(net,
                 imgs = imgs.to(device=device, dtype=torch.float32)
                 mask_type = torch.float32 if net.n_classes == 1 else torch.long
                 true_masks = true_masks.to(device=device, dtype=mask_type)
-
+                print(imgs.shape)
                 masks_pred = net(imgs)
                 loss = criterion(masks_pred, true_masks)
                 epoch_loss += loss.item()
