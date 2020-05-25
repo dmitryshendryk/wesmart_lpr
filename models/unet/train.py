@@ -66,6 +66,7 @@ def train_net(net,
             for batch in train_loader:
                 imgs = batch['image']
                 true_masks = batch['mask']
+                print(imgs.shape, true_masks.shape)
                 if imgs.shape[1] != net.n_channels:
                     print("Wrong shape img, Skipping ...")
                     continue
