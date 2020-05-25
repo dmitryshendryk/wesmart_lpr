@@ -8,3 +8,4 @@ models/mask_rcnn/checkpoints
 models/center_mask/__pycache__
 notebooks/.ipynb_checkpoints
 output
+models/unet/data
