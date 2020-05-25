@@ -66,7 +66,6 @@ def train_net(net,
             for batch in train_loader:
                 imgs = batch['image']
                 true_masks = batch['mask']
-                print(imgs.shape[1])
                 if imgs.shape[1] != net.n_channels:
                     print("Wrong shape img, Skipping ...")
                     continue
@@ -138,7 +137,7 @@ def get_args():
                         help='Learning rate', dest='lr')
     parser.add_argument('-f', '--load', dest='load', type=str, default=False,
                         help='Load model from a .pth file')
-    parser.add_argument('-s', '--scale', dest='scale', type=float, default=0.7,
+    parser.add_argument('-s', '--scale', dest='scale', type=float, default=0.8,
                         help='Downscaling factor of the images')
     parser.add_argument('-v', '--validation', dest='val', type=float, default=0.01,
                         help='Percent of the data that is used as validation (0-100)')
