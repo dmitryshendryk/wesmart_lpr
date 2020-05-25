@@ -26,7 +26,7 @@ def train_net(net,
               epochs=5,
               batch_size=1,
               lr=0.001,
-              val_percent=0.1,
+              val_percent=0.05,
               save_cp=True,
               img_scale=0.5):
 
