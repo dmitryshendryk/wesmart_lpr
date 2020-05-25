@@ -1,6 +1,6 @@
 _BASE_: "Base-CenterMask-ResNet.yaml"
 MODEL:
-  WEIGHTS: "detectron2://ImageNetPretrained/MSRA/X-101-32x8d.pkl"
+#   WEIGHTS: "detectron2://ImageNetPretrained/MSRA/X-101-32x8d.pkl"
   PIXEL_STD: [57.375, 57.120, 58.395]
   RESNETS:
     STRIDE_IN_1X1: False  # this is a C2 model
