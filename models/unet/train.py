@@ -24,7 +24,7 @@ import copy
 
 
 # Generate some random images
-input_images, target_masks = simulation.generate_random_data(192, 192, count=3)
+input_images, target_masks = simulation.generate_random_data(800, 800, count=3)
 
 for x in [input_images, target_masks]:
     print(x.shape)
