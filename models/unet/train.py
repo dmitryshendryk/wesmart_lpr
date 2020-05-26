@@ -38,7 +38,7 @@ target_masks_rgb = [helper.masks_to_colorimg(x) for x in target_masks]
 
 class SimDataset(Dataset):
     def __init__(self, count, transform=None):
-        self.input_images, self.target_masks = simulation.generate_random_data(192, 192, count=count)        
+        self.input_images, self.target_masks = simulation.generate_random_data(800, 800, count=count)        
         self.transform = transform
     
     def __len__(self):
