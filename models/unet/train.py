@@ -52,6 +52,8 @@ class SimDataset(Dataset):
         if self.transform:
             image = self.transform(image)
         
+        print("Imgs".format(image.shape))
+        print("Mask".format(mask.shape))
         return [image, mask]
 
 # use same transform for train/val for this example
@@ -60,20 +62,20 @@ trans = transforms.Compose([
     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]) # imagenet
 ])
 
-# train_set = SimDataset(2000, transform=trans)
-# val_set = SimDataset(200, transform=trans)
+train_set = SimDataset(2000, transform=trans)
+val_set = SimDataset(200, transform=trans)
 
-dir_img = 'data/imgs/'
-dir_mask = 'data/masks/'
-img_scale = 0.7
-val_percent=0.1
+# dir_img = 'data/imgs/'
+# dir_mask = 'data/masks/'
+# img_scale = 0.7
+# val_percent=0.1
 batch_size = 1
 
 
-dataset = BasicDataset(dir_img,dir_mask, trans, img_scale)
-n_val = int(len(dataset) * val_percent)
-n_train = len(dataset) - n_val
-train_set, val_set = random_split(dataset, [n_train, n_val])
+# dataset = BasicDataset(dir_img,dir_mask, trans, img_scale)
+# n_val = int(len(dataset) * val_percent)
+# n_train = len(dataset) - n_val
+# train_set, val_set = random_split(dataset, [n_train, n_val])
 
 
 
