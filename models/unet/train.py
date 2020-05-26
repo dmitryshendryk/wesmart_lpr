@@ -59,13 +59,13 @@ trans = transforms.Compose([
 ])
 
 train_set = SimDataset(20, transform=trans)
-val_set = SimDataset(2, transform=trans)
+val_set = SimDataset(1, transform=trans)
 
 image_datasets = {
     'train': train_set, 'val': val_set
 }
 
-batch_size = 2
+batch_size = 1
 
 dataloaders = {
     'train': DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=0),
