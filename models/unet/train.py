@@ -52,8 +52,6 @@ class SimDataset(Dataset):
         if self.transform:
             image = self.transform(image)
         
-        print("Imgs {}".format(image.shape))
-        print("Mask {}".format(mask.shape))
         return [image, mask]
 
 # use same transform for train/val for this example
