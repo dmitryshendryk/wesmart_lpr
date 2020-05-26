@@ -287,7 +287,7 @@ def train_model(model, optimizer, scheduler, num_epochs=25):
 
 print(device)
 
-num_class = 6
+num_class = 1
 
 model = ResNetUNet(num_class).to(device)
 
