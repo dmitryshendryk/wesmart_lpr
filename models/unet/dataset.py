@@ -60,12 +60,12 @@ class BasicDataset(Dataset):
         print(img.shape, mask.shape)
         if img.shape[0] !=3:
             img = img[:3,:,:]
-        img = torch.from_numpy(img).float()
+        # img = torch.from_numpy(img).float()
         
         # print("Imgs {}".format(img.shape[0]))
         # print("Mask {}".format(mask.shape))
-        # if self.transform:
-            # img = self.transform(img)
+        if self.transform:
+            img = self.transform(img)
         
        
         return [img,mask]
