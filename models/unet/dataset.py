@@ -66,6 +66,7 @@ class BasicDataset(Dataset):
         # print("Mask {}".format(mask.shape))
         if self.transform:
             img = self.transform(img)
+            mask = self.transform(img)
         
        
         return [img,mask]
