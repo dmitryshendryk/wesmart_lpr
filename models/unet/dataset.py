@@ -62,6 +62,6 @@ class BasicDataset(Dataset):
         # img = self.preprocess(img, self.scale)
         # mask = self.preprocess(mask, self.scale)
         if self.transform:
-            image = self.transform(image)
+            img = self.transform(img)
         # return [torch.from_numpy(img), torch.from_numpy(mask)]
         return [img, mask]
