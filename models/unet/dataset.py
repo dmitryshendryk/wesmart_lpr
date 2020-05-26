@@ -68,4 +68,4 @@ class BasicDataset(Dataset):
             # img = self.transform(img)
         
        
-        return [torch.from_numpy(img), mask]
+        return [torch.from_numpy(img).float(), mask]
