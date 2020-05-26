@@ -255,7 +255,7 @@ def train_model(model, optimizer, scheduler, num_epochs=25):
                 # forward
                 # track history if only in train
                 with torch.set_grad_enabled(phase == 'train'):
-                    outputs = model(inputs)
+                    outputs = model(inputs.float())
                     loss = calc_loss(outputs, labels, metrics)
 
                     # backward + optimize only if in training phase
