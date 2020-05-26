@@ -67,7 +67,7 @@ dir_img = 'data/imgs/'
 dir_mask = 'data/masks/'
 img_scale = 0.7
 val_percent=0.1
-batch_size = 2
+batch_size = 1
 
 
 dataset = BasicDataset(dir_img,dir_mask,img_scale)
