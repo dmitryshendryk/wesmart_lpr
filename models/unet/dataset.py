@@ -61,8 +61,8 @@ class BasicDataset(Dataset):
 
         # img = self.preprocess(img, self.scale)
         # mask = self.preprocess(mask, self.scale)
-        print("Imgs {}".format(img.shape))
-        print("Mask {}".format(mask.shape))
+        print("Imgs {}".format(img.size))
+        print("Mask {}".format(mask.size))
         if self.transform:
             img = self.transform(img)
             mask = self.transform(mask)
