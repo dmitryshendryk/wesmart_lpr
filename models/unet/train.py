@@ -290,3 +290,21 @@ def train_model(model, optimizer, scheduler, num_epochs=25):
     model.load_state_dict(best_model_wts)
     return model
 
+
+print(device)
+
+num_class = 1
+
+model = ResNetUNet(num_class).to(device)
+
+# freeze backbone layers
+# Comment out to finetune further
+for l in model.base_layers:
+    for param in l.parameters():
+        param.requires_grad = False
+
+optimizer_ft = optim.Adam(filter(lambda p: p.requires_grad, model.parameters()), lr=1e-4)
+
+exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=10, gamma=0.1)        
+        
+model = train_model(model, optimizer_ft, exp_lr_scheduler, num_epochs=15)
