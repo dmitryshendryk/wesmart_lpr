@@ -68,5 +68,7 @@ class BasicDataset(Dataset):
             img = self.transform(img)
             mask = self.transform(mask)
         
+        if img.shape[0] !=3:
+            img = img[:3,:,:]
        
         return [img,mask]
