@@ -64,8 +64,8 @@ class BasicDataset(Dataset):
         mask = self.preprocess(mask)
         print("Imgs {}".format(img.shape))
         print("Mask {}".format(mask.shape))
-        if self.transform:
-            img = self.transform(img)
+        # if self.transform:
+            # img = self.transform(img)
         
        
-        return [img, np.array(mask)]
+        return [torch.from_numpy(img), mask]
