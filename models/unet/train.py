@@ -302,4 +302,4 @@ optimizer_ft = optim.Adam(filter(lambda p: p.requires_grad, model.parameters()),
 
 exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=10, gamma=0.1)        
         
-model = train_model(model, optimizer_ft, exp_lr_scheduler, num_epochs=15)
+model = train_model(model, optimizer_ft, exp_lr_scheduler, num_epochs=45)
