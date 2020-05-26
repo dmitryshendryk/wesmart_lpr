@@ -7,9 +7,8 @@ from torch.utils.data import Dataset
 import logging
 from PIL import Image
 
-
 class BasicDataset(Dataset):
-    def __init__(self, imgs_dir, masks_dir, scale=1):
+    def __init__(self, imgs_dir, masks_dir, transform, scale=1):
         self.imgs_dir = imgs_dir
         self.masks_dir = masks_dir
         self.scale = scale
@@ -32,15 +31,17 @@ class BasicDataset(Dataset):
 
         img_nd = np.array(pil_img)
 
-        if len(img_nd.shape) == 2:
-            img_nd = np.expand_dims(img_nd, axis=2)
+        # if len(img_nd.shape) == 2:
+        #     img_nd = np.expand_dims(img_nd, axis=2)
 
-        # HWC to CHW
-        img_trans = img_nd.transpose((2, 0, 1))
-        if img_trans.max() > 1:
-            img_trans = img_trans / 255
+        # # HWC to CHW
+        # img_trans = img_nd.transpose((2, 0, 1))
+        # if img_trans.max() > 1:
+        #     img_trans = img_trans / 255
 
-        return img_trans
+        
+
+        return img_nd
 
     def __getitem__(self, i):
         idx = self.ids[i]
@@ -57,8 +58,9 @@ class BasicDataset(Dataset):
         assert img.size == mask.size, \
             f'Image and mask {idx} should be the same size, but are {img.size} and {mask.size}'
 
-        img = self.preprocess(img, self.scale)
-        mask = self.preprocess(mask, self.scale)
-
+        # img = self.preprocess(img, self.scale)
+        # mask = self.preprocess(mask, self.scale)
+        if self.transform:
+            image = self.transform(image)
         # return [torch.from_numpy(img), torch.from_numpy(mask)]
         return [img, mask]
