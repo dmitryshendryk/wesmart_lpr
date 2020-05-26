@@ -62,10 +62,10 @@ class BasicDataset(Dataset):
             f'Image and mask {idx} should be the same size, but are {img.size} and {mask.size}'
         img = self.preprocess(img)
         mask = self.preprocess(mask)
-       
+        print("Imgs {}".format(img.shape))
+        print("Mask {}".format(mask.shape))
         if self.transform:
             img = self.transform(img)
         
-        print("Imgs {}".format(img.shape))
-        print("Mask {}".format(mask.shape))
+       
         return [img, np.array(mask)]
