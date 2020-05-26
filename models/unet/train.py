@@ -62,17 +62,17 @@ trans = transforms.Compose([
     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]) # imagenet
 ])
 
-# train_set = SimDataset(2000, transform=trans)
-# val_set = SimDataset(200, transform=trans)
+train_set = SimDataset(2000, transform=trans)
+val_set = SimDataset(200, transform=trans)
 
 dir_img = 'data/imgs/'
 dir_mask = 'data/masks/'
 
-dataset = BasicDataset(dir_img, dir_mask, trans, scale=0.5)
+# dataset = BasicDataset(dir_img, dir_mask, trans, scale=0.5)
 val_percent=0.1
-n_val = int(len(dataset) * val_percent)
-n_train = len(dataset) - n_val
-train_set, val_set = random_split(dataset, [n_train, n_val])
+# n_val = int(len(dataset) * val_percent)
+# n_train = len(dataset) - n_val
+# train_set, val_set = random_split(dataset, [n_train, n_val])
 batch_size = 1
 
 
