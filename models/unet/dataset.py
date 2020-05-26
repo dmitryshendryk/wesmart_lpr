@@ -58,7 +58,7 @@ class BasicDataset(Dataset):
 
         assert img.size == mask.size, \
             f'Image and mask {idx} should be the same size, but are {img.size} and {mask.size}'
-
+        img = np.array(mask)
         # img = self.preprocess(img, self.scale)
         # mask = self.preprocess(mask, self.scale)
        
