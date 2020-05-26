@@ -63,6 +63,7 @@ class BasicDataset(Dataset):
         img = self.preprocess(img)
         mask = self.preprocess(mask)
         if img.shape[0] !=3:
+            print(img.shape)
             img = img.reshape[:3,:,:]
         img = torch.from_numpy(img).float()
         
