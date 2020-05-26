@@ -56,7 +56,7 @@ class SimDataset(Dataset):
 
 # use same transform for train/val for this example
 trans = transforms.Compose([
-    transforms.Resize((960,540)),
+    transforms.Resize((540)),
     transforms.ToTensor()
 ])
 
