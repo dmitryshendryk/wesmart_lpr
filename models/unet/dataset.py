@@ -23,11 +23,11 @@ class BasicDataset(Dataset):
         return len(self.ids)
 
     @classmethod
-    def preprocess(cls, pil_img, scale):
+    def preprocess(cls, pil_img):
         w, h = pil_img.size
-        newW, newH = int(scale * w), int(scale * h)
-        assert newW > 0 and newH > 0, 'Scale is too small'
-        pil_img = pil_img.resize((newW, newH))
+        # newW, newH = int(scale * w), int(scale * h)
+        # assert newW > 0 and newH > 0, 'Scale is too small'
+        pil_img = pil_img.resize((960, 480))
 
         img_nd = np.array(pil_img)
 
@@ -55,8 +55,8 @@ class BasicDataset(Dataset):
 
         assert img.size == mask.size, \
             f'Image and mask {idx} should be the same size, but are {img.size} and {mask.size}'
-        img = self.preprocess(img, self.scale)
-        mask = self.preprocess(mask, self.scale)
+        img = self.preprocess(img)
+        mask = self.preprocess(mask)
         if img.shape[0] !=3:
             img = img[:3,:,:]
         img = torch.from_numpy(img).float()
