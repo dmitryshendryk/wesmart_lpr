@@ -27,7 +27,7 @@ class BasicDataset(Dataset):
         w, h = pil_img.size
         # newW, newH = int(scale * w), int(scale * h)
         # assert newW > 0 and newH > 0, 'Scale is too small'
-        pil_img = pil_img.resize((192, 192))
+        pil_img = pil_img.resize((800, 800))
 
         img_nd = np.array(pil_img)
 
