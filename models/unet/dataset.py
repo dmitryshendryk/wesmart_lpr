@@ -64,4 +64,4 @@ class BasicDataset(Dataset):
         if self.transform:
             img = self.transform(img)
         # return [torch.from_numpy(img), torch.from_numpy(mask)]
-        return [img, mask]
+        return [img, torch.from_numpy(np.array(mask))]
