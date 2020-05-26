@@ -71,7 +71,7 @@ val_percent=0.1
 n_val = int(len(dataset) * val_percent)
 n_train = len(dataset) - n_val
 train_set, val_set = random_split(dataset, [n_train, n_val])
-batch_size = 3
+batch_size = 1
 
 
 image_datasets = {
