@@ -4,7 +4,7 @@ import numpy as np
 import helper
 import simulation
 
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, random_split
 from torchvision import transforms, datasets, models
 import torchvision.utils
 from torchvision import models
@@ -22,9 +22,11 @@ from torch.optim import lr_scheduler
 import time
 import copy
 
+from dataset import BasicDataset
+
 
 # Generate some random images
-input_images, target_masks = simulation.generate_random_data(800, 800, count=3)
+input_images, target_masks = simulation.generate_random_data(192, 192, count=3)
 
 for x in [input_images, target_masks]:
     print(x.shape)
@@ -38,7 +40,7 @@ target_masks_rgb = [helper.masks_to_colorimg(x) for x in target_masks]
 
 class SimDataset(Dataset):
     def __init__(self, count, transform=None):
-        self.input_images, self.target_masks = simulation.generate_random_data(800, 800, count=count)        
+        self.input_images, self.target_masks = simulation.generate_random_data(192, 192, count=count)        
         self.transform = transform
     
     def __len__(self):
@@ -58,14 +60,32 @@ trans = transforms.Compose([
     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]) # imagenet
 ])
 
-train_set = SimDataset(20, transform=trans)
-val_set = SimDataset(1, transform=trans)
+# train_set = SimDataset(2000, transform=trans)
+# val_set = SimDataset(200, transform=trans)
+
+dir_img = 'data/imgs/'
+dir_mask = 'data/masks/'
+img_scale = 0.7
+val_percent=0.1
+batch_size = 2
+
+
+dataset = BasicDataset(dir_img,dir_mask,img_scale)
+n_val = int(len(dataset) * val_percent)
+n_train = len(dataset) - n_val
+train_set, val_set = random_split(dataset, [n_train, n_val])
+
+
 
 image_datasets = {
     'train': train_set, 'val': val_set
 }
 
-batch_size = 1
+
+# dataloaders = {
+#     'train': DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=0),
+#     'val': DataLoader(val_set, batch_size=batch_size, shuffle=True, num_workers=0)
+# }
 
 dataloaders = {
     'train': DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=0),
@@ -183,7 +203,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = ResNetUNet(6)
 model = model.to(device)
 
-summary(model, input_size=(3, 800, 800))
+summary(model, input_size=(3, 224, 224))
 
 
 def calc_loss(pred, target, metrics, bce_weight=0.5):
@@ -270,21 +290,3 @@ def train_model(model, optimizer, scheduler, num_epochs=25):
     model.load_state_dict(best_model_wts)
     return model
 
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-print(device)
-
-num_class = 6
-
-model = ResNetUNet(num_class).to(device)
-
-# freeze backbone layers
-# Comment out to finetune further
-for l in model.base_layers:
-    for param in l.parameters():
-        param.requires_grad = False
-
-optimizer_ft = optim.Adam(filter(lambda p: p.requires_grad, model.parameters()), lr=1e-4)
-
-exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=10, gamma=0.1)        
-        
-model = train_model(model, optimizer_ft, exp_lr_scheduler, num_epochs=15)
