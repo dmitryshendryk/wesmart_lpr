@@ -61,11 +61,12 @@ class BasicDataset(Dataset):
 
         # img = self.preprocess(img, self.scale)
         # mask = self.preprocess(mask, self.scale)
+        print("Imgs {}".format(img.shape))
+        print("Mask {}".format(mask.shape))
         if self.transform:
             img = self.transform(img)
             mask = self.transform(mask)
         # return [torch.from_numpy(img), torch.from_numpy(mask)]
         
-        print("Imgs {}".format(img.shape))
-        print("Mask {}".format(mask.shape))
+       
         return [img, mask]
