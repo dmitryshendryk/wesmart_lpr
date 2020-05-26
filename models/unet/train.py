@@ -267,6 +267,7 @@ def train_model(model, optimizer, scheduler, num_epochs=25):
 
                 # statistics
                 epoch_samples += inputs.size(0)
+                print(epoch_samples)
 
             print_metrics(metrics, epoch_samples, phase)
             epoch_loss = metrics['loss'] / epoch_samples
