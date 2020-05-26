@@ -4,7 +4,7 @@ import numpy as np
 import helper
 import simulation
 
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, random_split
 from torchvision import transforms, datasets, models
 import torchvision.utils
 from torchvision import models
