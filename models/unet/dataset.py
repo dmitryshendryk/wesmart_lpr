@@ -62,7 +62,10 @@ class BasicDataset(Dataset):
             f'Image and mask {idx} should be the same size, but are {img.size} and {mask.size}'
         img = self.preprocess(img)
         mask = self.preprocess(mask)
+        if img.shape[0] !=3:
+            img = img.reshape[:3,:,:]
         img = torch.from_numpy(img).float()
+        
         # print("Imgs {}".format(img.shape[0]))
         # print("Mask {}".format(mask.shape))
         # if self.transform:

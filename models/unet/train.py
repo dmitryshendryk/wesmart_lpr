@@ -246,10 +246,6 @@ def train_model(model, optimizer, scheduler, num_epochs=25):
             epoch_samples = 0
             
             for inputs, labels in dataloaders[phase]:
-                print(inputs.shape)
-                if inputs.shape[0] != 3:
-                    print('Here')
-                    continue
                 inputs = inputs.to(device)
                 labels = labels.to(device)             
 
