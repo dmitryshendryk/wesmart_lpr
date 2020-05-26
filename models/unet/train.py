@@ -65,7 +65,7 @@ image_datasets = {
     'train': train_set, 'val': val_set
 }
 
-batch_size = 25
+batch_size = 2
 
 dataloaders = {
     'train': DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=0),
