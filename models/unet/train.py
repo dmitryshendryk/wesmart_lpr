@@ -4,7 +4,7 @@ import numpy as np
 import helper
 import simulation
 
-from torch.utils.data import Dataset, DataLoader, random_split
+from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, datasets, models
 import torchvision.utils
 from torchvision import models
@@ -52,8 +52,8 @@ class SimDataset(Dataset):
         if self.transform:
             image = self.transform(image)
         
-        print("Imgs {}".format(image.shape))
-        print("Mask {}".format(mask.shape))
+        print("Imgs {}".format(image))
+        print("Mask {}".format(mask))
         return [image, mask]
 
 # use same transform for train/val for this example
@@ -65,29 +65,11 @@ trans = transforms.Compose([
 train_set = SimDataset(2000, transform=trans)
 val_set = SimDataset(200, transform=trans)
 
-# dir_img = 'data/imgs/'
-# dir_mask = 'data/masks/'
-# img_scale = 0.7
-# val_percent=0.1
-batch_size = 1
-
-
-# dataset = BasicDataset(dir_img,dir_mask, trans, img_scale)
-# n_val = int(len(dataset) * val_percent)
-# n_train = len(dataset) - n_val
-# train_set, val_set = random_split(dataset, [n_train, n_val])
-
-
-
 image_datasets = {
     'train': train_set, 'val': val_set
 }
 
-
-# dataloaders = {
-#     'train': DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=0),
-#     'val': DataLoader(val_set, batch_size=batch_size, shuffle=True, num_workers=0)
-# }
+batch_size = 25
 
 dataloaders = {
     'train': DataLoader(train_set, batch_size=batch_size, shuffle=True, num_workers=0),
@@ -263,7 +245,7 @@ def train_model(model, optimizer, scheduler, num_epochs=25):
                 # forward
                 # track history if only in train
                 with torch.set_grad_enabled(phase == 'train'):
-                    outputs = model(inputs.float())
+                    outputs = model(inputs)
                     loss = calc_loss(outputs, labels, metrics)
 
                     # backward + optimize only if in training phase
@@ -295,7 +277,7 @@ def train_model(model, optimizer, scheduler, num_epochs=25):
 
 print(device)
 
-num_class = 1
+num_class = 6
 
 model = ResNetUNet(num_class).to(device)
 
