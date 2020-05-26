@@ -56,9 +56,11 @@ class SimDataset(Dataset):
 
 # use same transform for train/val for this example
 trans = transforms.Compose([
-    transforms.Resize((800,600)),
+    transforms.Resize((192,192)),
     transforms.ToTensor()
 ])
+
+
 
 # train_set = SimDataset(2000, transform=trans)
 # val_set = SimDataset(200, transform=trans)
