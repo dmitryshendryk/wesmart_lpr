@@ -58,8 +58,8 @@ trans = transforms.Compose([
     transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225]) # imagenet
 ])
 
-train_set = SimDataset(2000, transform=trans)
-val_set = SimDataset(200, transform=trans)
+train_set = SimDataset(20, transform=trans)
+val_set = SimDataset(2, transform=trans)
 
 image_datasets = {
     'train': train_set, 'val': val_set
@@ -183,7 +183,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = ResNetUNet(6)
 model = model.to(device)
 
-summary(model, input_size=(3, 224, 224))
+summary(model, input_size=(3, 800, 800))
 
 
 def calc_loss(pred, target, metrics, bce_weight=0.5):
