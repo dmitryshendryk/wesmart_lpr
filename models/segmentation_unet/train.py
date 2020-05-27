@@ -59,10 +59,10 @@ class Dataset(BaseDataset):
         self.preprocessing = preprocessing
     
     def scale_img(self,img):
-        scale_percent = 30 # percent of original size
-        width = int(img.shape[1] * scale_percent / 100)
-        height = int(img.shape[0] * scale_percent / 100)
-        dim = (width, height)
+#         scale_percent = 30 # percent of original size
+#         width = int(img.shape[1] * scale_percent / 100)
+#         height = int(img.shape[0] * scale_percent / 100)
+        dim = (512, 512)
         # resize image
         resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
         if len(resized.shape) != 3:
@@ -92,7 +92,7 @@ class Dataset(BaseDataset):
         if self.preprocessing:
             sample = self.preprocessing(image=image, mask=mask)
             image, mask = sample['image'], sample['mask']
-#         print(image.shape, mask.shape)
+        print(image.shape, mask.shape)
         return image, mask
         
     def __len__(self):
