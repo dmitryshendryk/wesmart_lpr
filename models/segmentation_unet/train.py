@@ -58,6 +58,17 @@ class Dataset(BaseDataset):
         self.augmentation = augmentation
         self.preprocessing = preprocessing
     
+    def scale_img(self,img):
+        scale_percent = 30 # percent of original size
+        width = int(img.shape[1] * scale_percent / 100)
+        height = int(img.shape[0] * scale_percent / 100)
+        dim = (width, height)
+        # resize image
+        resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
+        if len(resized.shape) != 3:
+            resized = np.expand_dims(resized,2)
+        return resized
+    
     def __getitem__(self, i):
         
         # read data
@@ -69,6 +80,9 @@ class Dataset(BaseDataset):
         masks = [(mask == v) for v in self.class_values]
         mask = np.stack(masks, axis=-1).astype('float')
         
+        image = self.scale_img(image)
+        mask = self.scale_img(mask)
+        
         # apply augmentations
         if self.augmentation:
             sample = self.augmentation(image=image, mask=mask)
@@ -78,7 +92,7 @@ class Dataset(BaseDataset):
         if self.preprocessing:
             sample = self.preprocessing(image=image, mask=mask)
             image, mask = sample['image'], sample['mask']
-        
+#         print(image.shape, mask.shape)
         return image, mask
         
     def __len__(self):
