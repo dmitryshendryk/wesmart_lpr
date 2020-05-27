@@ -192,7 +192,7 @@ valid_dataset = Dataset(
     classes=CLASSES,
 )
 
-train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True, num_workers=0)
+train_loader = DataLoader(train_dataset, batch_size=1, shuffle=True, num_workers=0)
 valid_loader = DataLoader(valid_dataset, batch_size=1, shuffle=False, num_workers=0)
 
 loss = smp.utils.losses.DiceLoss()
