@@ -183,7 +183,7 @@ ENCODER = 'se_resnext50_32x4d'
 ENCODER_WEIGHTS = 'imagenet'
 CLASSES = ['carplate']
 ACTIVATION = 'sigmoid' # could be None for logits or 'softmax2d' for multicalss segmentation
-DEVICE = 'cpu'
+DEVICE = 'cuda'
 
 # create segmentation model with pretrained encoder
 model = smp.FPN(
