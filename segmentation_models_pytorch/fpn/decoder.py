@@ -29,7 +29,7 @@ class FPNBlock(nn.Module):
     def __init__(self, pyramid_channels, skip_channels):
         super().__init__()
         self.skip_conv = nn.Conv2d(skip_channels, pyramid_channels, kernel_size=1)
-        self.my_upsample_emulator = nn.ConvTranspose2d(skip_channels, pyramid_channels, kernel_size=2, stride=2)
+        self.my_upsample_emulator = nn.ConvTranspose2d(pyramid_channels, skip_channels, kernel_size=2, stride=2)
 
     def forward(self, x, skip=None):
         x = self.my_upsample_emulator(x)
