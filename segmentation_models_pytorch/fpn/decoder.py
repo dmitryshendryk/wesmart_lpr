@@ -7,6 +7,8 @@ class Conv3x3GNReLU(nn.Module):
     def __init__(self, in_channels, out_channels, upsample=False):
         super().__init__()
         self.upsample = upsample
+        self.my_upsample_emulator = nn.ConvTranspose2d(in_channels, out_channels, kernel_size=2, stride=2)
+
         self.block = nn.Sequential(
             nn.Conv2d(
                 in_channels, out_channels, (3, 3), stride=1, padding=1, bias=False
@@ -18,7 +20,8 @@ class Conv3x3GNReLU(nn.Module):
     def forward(self, x):
         x = self.block(x)
         if self.upsample:
-            x = F.interpolate(x, scale_factor=2, mode="bilinear", align_corners=True)
+            x = self.my_upsample_emulator(x)
+            # x = F.interpolate(x, scale_factor=2, mode="bilinear", align_corners=True)
         return x
 
 
@@ -28,7 +31,8 @@ class FPNBlock(nn.Module):
         self.skip_conv = nn.Conv2d(skip_channels, pyramid_channels, kernel_size=1)
 
     def forward(self, x, skip=None):
-        x = F.interpolate(x, scale_factor=2, mode="nearest")
+        x = self.my_upsample_emulator(x)
+        # x = F.interpolate(x, scale_factor=2, mode="nearest")
         skip = self.skip_conv(skip)
         x = x + skip
         return x
