@@ -1,4 +1,5 @@
 import os
+import sys
 
 import numpy as np
 import cv2
@@ -11,10 +12,15 @@ import albumentations as albu
 
 import torch
 import numpy as np
+
+ROOT = os.path.abspath('../../')
+sys.path.append(ROOT)
+
+
 import segmentation_models_pytorch as smp
 
 
-DATA_DIR = '../data/plates_with_masks/'
+DATA_DIR = '../../data/plates_with_masks/'
 x_train_dir = os.path.join(DATA_DIR, 'train')
 y_train_dir = os.path.join(DATA_DIR, 'train_masks')
 
@@ -177,7 +183,7 @@ ENCODER = 'se_resnext50_32x4d'
 ENCODER_WEIGHTS = 'imagenet'
 CLASSES = ['carplate']
 ACTIVATION = 'sigmoid' # could be None for logits or 'softmax2d' for multicalss segmentation
-DEVICE = 'cuda'
+DEVICE = 'cpu'
 
 # create segmentation model with pretrained encoder
 model = smp.FPN(
