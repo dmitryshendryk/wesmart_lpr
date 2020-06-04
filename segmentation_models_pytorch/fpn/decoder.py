@@ -7,7 +7,7 @@ class Conv3x3GNReLU(nn.Module):
     def __init__(self, in_channels, out_channels, upsample=False):
         super().__init__()
         self.upsample = upsample
-        self.my_upsample_emulator = nn.ConvTranspose2d(in_channels, out_channels, kernel_size=2, stride=2)
+        self.my_upsample_emulator = nn.ConvTranspose2d(out_channels, out_channels, kernel_size=2, stride=2)
 
         self.block = nn.Sequential(
             nn.Conv2d(
