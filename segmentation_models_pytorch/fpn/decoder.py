@@ -33,8 +33,8 @@ class FPNBlock(nn.Module):
         self.my_upsample_emulator = nn.ConvTranspose2d(pyramid_channels, pyramid_channels, kernel_size=2, stride=2)
 
     def forward(self, x, skip=None):
-        # x = self.my_upsample_emulator(x)
-        x = F.interpolate(x, scale_factor=2, mode="nearest")
+        x = self.my_upsample_emulator(x)
+        # x = F.interpolate(x, scale_factor=2, mode="nearest")
         skip = self.skip_conv(skip)
         x = x + skip
         return x
