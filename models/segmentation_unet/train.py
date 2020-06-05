@@ -20,7 +20,7 @@ sys.path.append(ROOT)
 import segmentation_models_pytorch as smp
 
 
-DATA_DIR = '../data/plates_with_masks/'
+DATA_DIR = '../../data/plates_with_masks/'
 x_train_dir = os.path.join(DATA_DIR, 'train')
 y_train_dir = os.path.join(DATA_DIR, 'train_masks')
 
@@ -183,7 +183,7 @@ ENCODER = 'se_resnext50_32x4d'
 ENCODER_WEIGHTS = 'imagenet'
 CLASSES = ['carplate']
 ACTIVATION = 'sigmoid' # could be None for logits or 'softmax2d' for multicalss segmentation
-DEVICE = 'cuda'
+DEVICE = 'cpu'
 
 # create segmentation model with pretrained encoder
 model = smp.FPN(
@@ -211,7 +211,7 @@ valid_dataset = Dataset(
     classes=CLASSES,
 )
 
-train_loader = DataLoader(train_dataset, batch_size=3, shuffle=True, num_workers=0)
+train_loader = DataLoader(train_dataset, batch_size=2, shuffle=True, num_workers=0)
 valid_loader = DataLoader(valid_dataset, batch_size=1, shuffle=False, num_workers=0)
 
 loss = smp.utils.losses.DiceLoss()
@@ -220,7 +220,7 @@ metrics = [
 ]
 
 optimizer = torch.optim.Adam([ 
-    dict(params=model.parameters(), lr=0.0001),
+    dict(params=model.parameters(), lr=0.001),
 ])
 
 # create epoch runners 

@@ -6,7 +6,6 @@ import torch.nn.functional as F
 class Conv3x3GNReLU(nn.Module):
     def __init__(self, in_channels, out_channels, upsample=False):
         super().__init__()
-        # block_out_channels = in_channels - int(in_channels * 0.2)
         self.upsample = upsample
 
         self.my_upsample_emulator = nn.ConvTranspose2d(out_channels, out_channels, kernel_size=2, stride=2)
