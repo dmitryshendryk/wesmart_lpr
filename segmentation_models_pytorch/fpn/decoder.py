@@ -6,20 +6,19 @@ import torch.nn.functional as F
 class Conv3x3GNReLU(nn.Module):
     def __init__(self, in_channels, out_channels, upsample=False):
         super().__init__()
-        print( "Test",in_channels, out_channels)
         # block_out_channels = in_channels - int(in_channels * 0.2)
         self.upsample = upsample
         self.block_out_channels = 196
         if in_channels == out_channels:
             self.block_out_channels = out_channels
 
-        self.my_upsample_emulator = nn.ConvTranspose2d(self.block_out_channels, out_channels, kernel_size=2, stride=2)
+        self.my_upsample_emulator = nn.ConvTranspose2d(out_channels, out_channels, kernel_size=2, stride=2)
 
         self.block = nn.Sequential(
             nn.Conv2d(
-                in_channels, self.block_out_channels, (3, 3), stride=1, padding=1, bias=False
+                in_channels, out_channels, (3, 3), stride=1, padding=1, bias=False
             ),
-            nn.GroupNorm(32, self.block_out_channels),
+            nn.GroupNorm(32, out_channels),
             nn.ReLU(inplace=True),
         )
 
@@ -38,8 +37,8 @@ class FPNBlock(nn.Module):
         self.my_upsample_emulator = nn.ConvTranspose2d(skip_channels, pyramid_channels, kernel_size=2, stride=2)
 
     def forward(self, x, skip=None):
-        x = self.my_upsample_emulator(x)
-        # x = F.interpolate(x, scale_factor=2, mode="nearest")
+        # x = self.my_upsample_emulator(x)
+        x = F.interpolate(x, scale_factor=2, mode="nearest")
         skip = self.skip_conv(skip)
         x = x + skip
         return x
