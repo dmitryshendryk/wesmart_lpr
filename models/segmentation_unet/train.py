@@ -187,7 +187,7 @@ ACTIVATION = 'sigmoid' # could be None for logits or 'softmax2d' for multicalss 
 DEVICE = 'cuda'
 
 # create segmentation model with pretrained encoder
-model = smp.FPN(
+model = smp.Unet(
     encoder_name=ENCODER, 
     encoder_weights=ENCODER_WEIGHTS, 
     classes=len(CLASSES), 
@@ -221,7 +221,7 @@ metrics = [
 ]
 
 optimizer = torch.optim.Adam([ 
-    dict(params=model.parameters(), lr=0.00001),
+    dict(params=model.parameters(), lr=0.0001),
 ])
 
 scheduler = optim.lr_scheduler.ReduceLROnPlateau(
