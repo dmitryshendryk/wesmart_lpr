@@ -6,6 +6,7 @@ import torch.nn.functional as F
 class Conv3x3GNReLU(nn.Module):
     def __init__(self, in_channels, out_channels, upsample=False):
         super().__init__()
+        print( "Test",in_channels, out_channels)
         self.upsample = upsample
         self.my_upsample_emulator = nn.ConvTranspose2d(out_channels, out_channels, kernel_size=2, stride=2)
 
@@ -32,8 +33,8 @@ class FPNBlock(nn.Module):
         self.my_upsample_emulator = nn.ConvTranspose2d(pyramid_channels, pyramid_channels, kernel_size=2, stride=2)
 
     def forward(self, x, skip=None):
-        x = self.my_upsample_emulator(x)
-        # x = F.interpolate(x, scale_factor=2, mode="nearest")
+        # x = self.my_upsample_emulator(x)
+        x = F.interpolate(x, scale_factor=2, mode="nearest")
         skip = self.skip_conv(skip)
         x = x + skip
         return x
