@@ -220,7 +220,7 @@ metrics = [
 ]
 
 optimizer = torch.optim.Adam([ 
-    dict(params=model.parameters(), lr=0.001),
+    dict(params=model.parameters(), lr=0.0005),
 ])
 
 # create epoch runners 
