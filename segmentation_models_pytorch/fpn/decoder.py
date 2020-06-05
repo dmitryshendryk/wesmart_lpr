@@ -7,22 +7,23 @@ class Conv3x3GNReLU(nn.Module):
     def __init__(self, in_channels, out_channels, upsample=False):
         super().__init__()
         print( "Test",in_channels, out_channels)
+        block_out_channels = in_channels - int(in_channels * 0.2)
         self.upsample = upsample
-        self.my_upsample_emulator = nn.ConvTranspose2d(out_channels, out_channels, kernel_size=2, stride=2)
+        self.my_upsample_emulator = nn.ConvTranspose2d(block_out_channels, out_channels, kernel_size=2, stride=2)
 
         self.block = nn.Sequential(
             nn.Conv2d(
-                in_channels, out_channels, (3, 3), stride=1, padding=1, bias=False
+                in_channels, block_out_channels, (3, 3), stride=1, padding=1, bias=False
             ),
-            nn.GroupNorm(32, out_channels),
+            nn.GroupNorm(32, block_out_channels),
             nn.ReLU(inplace=True),
         )
 
     def forward(self, x):
         x = self.block(x)
         if self.upsample:
-            # x = self.my_upsample_emulator(x)
-            x = F.interpolate(x, scale_factor=2, mode="bilinear", align_corners=True)
+            x = self.my_upsample_emulator(x)
+            # x = F.interpolate(x, scale_factor=2, mode="bilinear", align_corners=True)
         return x
 
 
