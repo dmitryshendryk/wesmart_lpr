@@ -7,6 +7,7 @@ import cv2
 import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader
 from torch.utils.data import Dataset as BaseDataset
+from torch import optim
 import albumentations as albu
 
 
@@ -220,8 +221,11 @@ metrics = [
 ]
 
 optimizer = torch.optim.Adam([ 
-    dict(params=model.parameters(), lr=0.0005),
+    dict(params=model.parameters(), lr=0.0001),
 ])
+
+scheduler = optim.lr_scheduler.ReduceLROnPlateau(
+    optimizer, patience=1, verbose=True)
 
 # create epoch runners 
 # it is a simple loop of iterating over dataloader`s samples
@@ -249,6 +253,7 @@ for i in range(0, 5):
     print('\nEpoch: {}'.format(i))
     train_logs = train_epoch.run(train_loader)
     valid_logs = valid_epoch.run(valid_loader)
+    # scheduler.step(1.)    
     
     # do something (save model, change lr, etc.)
     if max_score < valid_logs['iou_score']:
