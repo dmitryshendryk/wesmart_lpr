@@ -221,7 +221,7 @@ metrics = [
 ]
 
 optimizer = torch.optim.Adam([ 
-    dict(params=model.parameters(), lr=0.0001),
+    dict(params=model.parameters(), lr=0.00001),
 ])
 
 scheduler = optim.lr_scheduler.ReduceLROnPlateau(
