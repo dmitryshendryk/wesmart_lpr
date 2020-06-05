@@ -9,13 +9,17 @@ class Conv3x3GNReLU(nn.Module):
         print( "Test",in_channels, out_channels)
         # block_out_channels = in_channels - int(in_channels * 0.2)
         self.upsample = upsample
-        self.my_upsample_emulator = nn.ConvTranspose2d(196, out_channels, kernel_size=2, stride=2)
+        self.block_out_channels = 196
+        if in_channels == out_channels:
+            self.block_out_channels = out_channels
+
+        self.my_upsample_emulator = nn.ConvTranspose2d(self.block_out_channels, out_channels, kernel_size=2, stride=2)
 
         self.block = nn.Sequential(
             nn.Conv2d(
-                in_channels, 196, (3, 3), stride=1, padding=1, bias=False
+                in_channels, self.block_out_channels, (3, 3), stride=1, padding=1, bias=False
             ),
-            nn.GroupNorm(32, 196),
+            nn.GroupNorm(32, self.block_out_channels),
             nn.ReLU(inplace=True),
         )
 
