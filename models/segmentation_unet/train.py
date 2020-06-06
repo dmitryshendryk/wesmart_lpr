@@ -21,7 +21,7 @@ sys.path.append(ROOT)
 import segmentation_models_pytorch as smp
 
 
-DATA_DIR = '../../data/plates_with_masks/'
+DATA_DIR = '../data/plates_with_masks/'
 x_train_dir = os.path.join(DATA_DIR, 'train')
 y_train_dir = os.path.join(DATA_DIR, 'train_masks')
 
