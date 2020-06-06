@@ -31,7 +31,7 @@ class DecoderBlock(nn.Module):
             padding=1,
             use_batchnorm=use_batchnorm,
         )
-        self.attention22222 = md.Attention(attention_type, in_channels=out_channels)
+        self.attention2 = md.Attention(attention_type, in_channels=out_channels)
 
 
         self.my_upsample_emulator = md.Conv2dTranspose(in_channels, in_channels)
@@ -45,7 +45,7 @@ class DecoderBlock(nn.Module):
             x = self.attention1(x)
         x = self.conv1(x)
         x = self.conv2(x)
-        x = self.attention22222(x)
+        x = self.attention2(x)
         return x
 
 
