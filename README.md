@@ -40,3 +40,6 @@ python performance.py
 ```
 
 
+### TRT
+
+./trtexec --onnx=/home/wesmart/Documents/apps/wesmart_lpr/models/segmentation_unet/super_resolution.onnx --batch=1 --saveEngine=unet_segemntation.trt --workspace=1024 --verbose=True --optShapes=input:1x3x512x288
