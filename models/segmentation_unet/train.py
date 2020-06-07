@@ -21,7 +21,7 @@ sys.path.append(ROOT)
 import segmentation_models_pytorch as smp
 
 
-DATA_DIR = '../../data/plates_with_masks/'
+DATA_DIR = '../data/plates_with_masks/'
 x_train_dir = os.path.join(DATA_DIR, 'train')
 y_train_dir = os.path.join(DATA_DIR, 'train_masks')
 
@@ -184,7 +184,7 @@ ENCODER = 'se_resnext50_32x4d'
 ENCODER_WEIGHTS = 'imagenet'
 CLASSES = ['carplate']
 ACTIVATION = 'sigmoid' # could be None for logits or 'softmax2d' for multicalss segmentation
-DEVICE = 'cpu'
+DEVICE = 'cuda'
 
 # create segmentation model with pretrained encoder
 model = smp.Unet(
