@@ -28,7 +28,7 @@ import segmentation_models_pytorch as smp
 
 torch_model = torch.load('../models/segmentation_unet/best_model.pth')
 
-x = torch.randn(1, 3, 1024, 576, requires_grad=True).cuda()
+x = torch.randn(1, 3, 512, 288, requires_grad=True).cuda()
 torch_out = torch_model(x).cuda()
 
 torch.onnx.export(torch_model,               # model being run
