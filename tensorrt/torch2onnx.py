@@ -21,6 +21,10 @@ import onnxruntime
 from PIL import Image
 import torchvision.transforms as transforms
 
+ROOT = os.path.abspath('../')
+import sys 
+sys.path.append(ROOT)
+import segmentation_models_pytorch as smp
 
 torch_model = torch.load('../models/segmentation_unet/best_model.pth', map_location=torch.device('cuda'))
 
