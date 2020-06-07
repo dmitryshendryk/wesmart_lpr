@@ -34,8 +34,8 @@ class DecoderBlock(nn.Module):
         self.attention2 = md.Attention(attention_type, in_channels=out_channels)
 
 
-        self.my_upsample_emulator = md.Conv2dTranspose(in_channels, in_channels)
-
+        # self.my_upsample_emulator = md.Conv2dTranspose(in_channels, in_channels)
+        self.my_upsample_emulator = nn.ConvTranspose2d(in_channels, in_channels, kernel_size=2, stride=2)
 
     def forward(self, x, skip=None):
         x = self.my_upsample_emulator(x)

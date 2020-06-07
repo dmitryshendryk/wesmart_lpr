@@ -101,16 +101,6 @@ class Activation(nn.Module):
     def forward(self, x):
         return self.activation(x)
 
-
-class Conv2dTranspose(nn.Module):
-    def __init__(self, in_channels, out_channels):
-        super().__init__()
-
-        self.my_upsample_emulator = nn.ConvTranspose2d(in_channels, in_channels, kernel_size=2, stride=2)
-
-    def forward(self, x):
-        return self.my_upsample_emulator(x)
-
 class Attention(nn.Module):
 
     def __init__(self, name, **params):
