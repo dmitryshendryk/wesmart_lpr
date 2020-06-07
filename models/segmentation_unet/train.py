@@ -249,7 +249,7 @@ valid_epoch = smp.utils.train.ValidEpoch(
 max_score = 0
 
 print(model)
-for i in range(0, 15):
+for i in range(0, 10):
     
     print('\nEpoch: {}'.format(i))
     train_logs = train_epoch.run(train_loader)
