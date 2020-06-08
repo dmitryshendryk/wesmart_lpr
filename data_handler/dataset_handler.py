@@ -38,7 +38,7 @@ def get_carplate_dicts(mode, root_path, test_split=0.1):
         annos = v["regions"]
         objs = []
         for anno in annos:
-            assert not anno["region_attributes"]
+            # assert not anno["region_attributes"]
             anno = anno["shape_attributes"]
             px = anno["all_points_x"]
             py = anno["all_points_y"]
