@@ -18,6 +18,10 @@ def get_carplate_dicts(mode, root_path, test_split=0.1):
     dataset_dicts = []
     dataset_len = len(list(imgs_anns['_via_img_metadata'].values()))
     dataset = list(imgs_anns['_via_img_metadata'].values())
+
+    dataset = [img for img in dataset if  img['regions']]
+    dataset_len = len(dataset)
+    
     if mode == 'train':
         dataset = dataset[:dataset_len - int(dataset_len*test_split)]
     elif mode == 'val':
