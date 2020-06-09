@@ -16,7 +16,7 @@ find_package(CUDA  REQUIRED)
 
 include_directories (${HEADER_FILES} ${CMAKE_PREFIX_PATH} ${CUDA_INCLUDE_DIRS}) 
 
-link_directories( ${CMAKE_PREFIX_PATH})
+link_directories(${HEADER_FILES} ${CMAKE_PREFIX_PATH})
 #add_subdirectory(${INCLUDE_DIR})
 
 if(NVINFER)
