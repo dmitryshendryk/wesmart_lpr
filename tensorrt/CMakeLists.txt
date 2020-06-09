@@ -30,9 +30,9 @@ else()
   set(TRT_AVAIL OFF)
 endif()
 
-SET(SAMPLE_SOURCES
-    trtexec.cpp
-)
+# SET(SAMPLE_SOURCES
+#     trtexec.cpp
+# )
 
 
 
@@ -44,6 +44,7 @@ add_library(${PROJECT_NAME} SHARED
 
 )
 
-add_executable( ${PROJECT_NAME} trtexec.cpp )
-
 target_link_libraries(${PROJECT_NAME} ${CUDA} ${INCLUDE_DIR})
+
+
+add_executable( ${PROJECT_NAME} trtexec.cpp )
