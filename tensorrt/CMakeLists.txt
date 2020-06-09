@@ -44,6 +44,6 @@ add_library(${PROJECT_NAME} SHARED
 
 )
 
-add_executable(${PROJECT_NAME} trtexec.cpp ${INCLUDE_DIR})
+add_executable( trt trtexec.cpp ${INCLUDE_DIR})
 
 target_link_libraries(${PROJECT_NAME} ${CUDA} ${INCLUDE_DIR})
