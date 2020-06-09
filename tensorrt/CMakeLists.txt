@@ -39,7 +39,7 @@ endif()
 add_library(${PROJECT_NAME} SHARED 
   ${INCLUDE_DIR}/logger.cpp
   ${INCLUDE_DIR}/logger.h
-  ${INCLUDE_DIR}/buffer.h
+  ${INCLUDE_DIR}/buffers.h
   ${INCLUDE_DIR}/common.h
 
 )
@@ -47,7 +47,9 @@ add_library(${PROJECT_NAME} SHARED
 target_link_libraries(${PROJECT_NAME} ${CUDA} ${INCLUDE_DIR})
 
 
+# add_executable( ${PROJECT_NAME} trtexec.cpp )
+
 
 add_executable( rgbd_realsense
-                  trtexec.cpp )
+              trtexec.cpp)
 target_link_libraries(rgbd_realsense ${PROJECT_NAME})
