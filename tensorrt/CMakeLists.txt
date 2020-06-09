@@ -2,6 +2,8 @@
 cmake_minimum_required(VERSION 3.16)
 
 
+project(trt)
+
 
 set(CMAKE_PREFIX_PATH "/home/wesmart/Documents/apps/TensorRT-7.0.0.11/lib/") 
 find_library(NVINFER NAMES libnvinfer.so)
