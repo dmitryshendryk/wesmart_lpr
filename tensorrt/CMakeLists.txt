@@ -17,7 +17,7 @@ find_package(CUDA  REQUIRED)
 include_directories (${INCLUDE_DIR} ${CMAKE_PREFIX_PATH} ${CUDA_INCLUDE_DIRS}) 
 
 link_directories(${INCLUDE_DIR} ${CMAKE_PREFIX_PATH})
-add_subdirectory(${INCLUDE_DIR})
+#add_subdirectory(${INCLUDE_DIR})
 
 if(NVINFER)
    message("TensorRT is available!")
