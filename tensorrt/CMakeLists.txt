@@ -14,10 +14,10 @@ find_library(NVPARSERS NAMES nvparsers)
 find_library(NVONNXPARSERS NAMES nvonnxparser)
 find_package(CUDA  REQUIRED)
 
-include_directories("${CUDA_INCLUDE_DIRS}")
-include_directories (${INCLUDE_DIR}) 
+include_directories (${INCLUDE_DIR} ${CMAKE_PREFIX_PATH} ${CUDA_INCLUDE_DIRS}) 
 
-link_directories(${INCLUDE_DIR})
+link_directories(${INCLUDE_DIR} ${CMAKE_PREFIX_PATH})
+add_subdirectory(${INCLUDE_DIR})
 
 if(NVINFER)
    message("TensorRT is available!")
@@ -36,4 +36,4 @@ SET(SAMPLE_SOURCES
 
 add_executable(${PROJECT_NAME} trtexec.cpp)
 
-target_link_libraries(${PROJECT_NAME} ${INCLUDE_DIR} )
+target_link_libraries(${PROJECT_NAME} ${INCLUDE_DIR} ${CMAKE_PREFIX_PATH})
