@@ -36,4 +36,4 @@ SET(SAMPLE_SOURCES
 
 add_executable(${PROJECT_NAME} trtexec.cpp ${INCLUDE_DIR})
 
-target_link_libraries(${PROJECT_NAME} ${CUDA} ${NVINFER} ${NVONNXPARSERS} ${NVPARSERS})
+target_link_libraries(${PROJECT_NAME} ${CUDA} ${INCLUDE_DIR})
