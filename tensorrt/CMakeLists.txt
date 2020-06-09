@@ -6,7 +6,10 @@ project(trt)
 
 
 set(CMAKE_PREFIX_PATH "/home/wesmart/Documents/apps/TensorRT-7.0.0.11/lib/") 
-set(CMAKE_PREFIX_PATH "/home/wesmart/Documents/apps/TensorRT-7.0.0.11/samples/common/") 
+set(INCLUDE_DIR "/home/wesmart/Documents/apps/TensorRT-7.0.0.11/samples/common/") 
+
+include_directories (${INCLUDE_DIR}) 
+
 find_library(NVINFER NAMES libnvinfer.so)
 find_library(NVPARSERS NAMES nvparsers)
 find_library(NVONNXPARSERS NAMES nvonnxparser)
