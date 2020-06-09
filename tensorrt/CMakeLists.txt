@@ -21,6 +21,7 @@ else()
 endif()
 
 SET(SAMPLE_SOURCES
-   
     trtexec.cpp
 )
+
+add_executable(trtexec trtexec.cpp)
