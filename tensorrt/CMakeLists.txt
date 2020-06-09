@@ -14,9 +14,9 @@ find_library(NVPARSERS NAMES nvparsers)
 find_library(NVONNXPARSERS NAMES nvonnxparser)
 find_package(CUDA  REQUIRED)
 
-include_directories (${INCLUDE_DIR} ${CMAKE_PREFIX_PATH} ${CUDA_INCLUDE_DIRS}) 
+include_directories ( ${CMAKE_PREFIX_PATH} ${CUDA_INCLUDE_DIRS}) 
 
-link_directories(${INCLUDE_DIR} ${CMAKE_PREFIX_PATH})
+link_directories( ${CMAKE_PREFIX_PATH})
 #add_subdirectory(${INCLUDE_DIR})
 
 if(NVINFER)
