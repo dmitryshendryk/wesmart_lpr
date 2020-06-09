@@ -36,4 +36,4 @@ SET(SAMPLE_SOURCES
 
 add_executable(trtexec trtexec.cpp)
 
-target_link_libraries( ${PROJECT_NAME} ${INCLUDE_DIR} )
+target_link_libraries(trt ${INCLUDE_DIR} )
