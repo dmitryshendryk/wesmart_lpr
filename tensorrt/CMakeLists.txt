@@ -34,6 +34,16 @@ SET(SAMPLE_SOURCES
     trtexec.cpp
 )
 
+
+
+add_library(${PROJECT_NAME} SHARED 
+  ${INCLUDE_DIR}/logger.cpp
+  ${INCLUDE_DIR}/logger.h
+  ${INCLUDE_DIR}/buffer.h
+  ${INCLUDE_DIR}/common.h
+
+)
+
 add_executable(${PROJECT_NAME} trtexec.cpp ${INCLUDE_DIR})
 
 target_link_libraries(${PROJECT_NAME} ${CUDA} ${INCLUDE_DIR})
