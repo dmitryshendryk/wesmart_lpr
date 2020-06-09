@@ -19,3 +19,8 @@ else()
   message("TensorRT is NOT Available")
   set(TRT_AVAIL OFF)
 endif()
+
+SET(SAMPLE_SOURCES
+   
+    trtexec.cpp
+)
