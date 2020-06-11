@@ -5,8 +5,8 @@ cmake_minimum_required(VERSION 3.10)
 project(trt)
 
 
-# set(CMAKE_PREFIX_PATH "/home/wesmart/Documents/apps/TensorRT-7.0.0.11/lib/") 
-set(CMAKE_PREFIX_PATH "/usr/lib/aarch64-linux-gnu") 
+set(CMAKE_PREFIX_PATH "/home/wesmart/Documents/apps/TensorRT-7.0.0.11/lib/") 
+# set(CMAKE_PREFIX_PATH "/usr/lib/aarch64-linux-gnu") 
 set(INCLUDE_DIR "/home/wesmart/Documents/apps/TensorRT-7.0.0.11/samples/common/") 
 set(HEADER_FILES ${INCLUDE_DIR}/logger.h ${INCLUDE_DIR}/buffers.h ${INCLUDE_DIR}/common.h)
 
