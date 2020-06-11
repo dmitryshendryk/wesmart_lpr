@@ -38,7 +38,6 @@ include_directories (
         /usr/local/include/json-glib-1.0) 
 
 link_directories( ${INCLUDE_DIR} ${CMAKE_PREFIX_PATH} ${GSTLIBS_LIBRARY_DIRS})
-#add_subdirectory(${INCLUDE_DIR})
 
 if(NVINFER)
    message("TensorRT is available!")
@@ -64,15 +63,15 @@ add_library(${PROJECT_NAME} SHARED
 
 )
 
-target_link_libraries(
-        ${PROJECT_NAME} 
-        ${CUDA_LIBRARIES} 
-        ${INCLUDE_DIR} 
-        ${NVINFER} 
-        ${NVPARSERS} 
-        ${NVONNXPARSERS} 
-        ${NVPLUGIN}
-        ${GSTLIBS_LIBRARIES})
+# target_link_libraries(
+#         ${PROJECT_NAME} 
+#         ${CUDA_LIBRARIES} 
+#         ${INCLUDE_DIR} 
+#         ${NVINFER} 
+#         ${NVPARSERS} 
+#         ${NVONNXPARSERS} 
+#         ${NVPLUGIN}
+#         ${GSTLIBS_LIBRARIES})
 
 set(SOURCE_FILES_MAIN ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/main.cpp)
 set(SOURCE_FILES_WEBRTC ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/rtsp_webrtc.cpp)
@@ -86,7 +85,7 @@ add_executable(rtsp2webrtc ${SOURCE_FILES_WEBRTC})
 add_executable(rtsprestream ${SOURCE_FILES_RTSP})
 add_executable(gstrtptest ${SOURCE_FILES_RTP_TEST})
 add_executable(rtspstreamappsrc ${SOURCE_FILES_RTSP_APPSRC})
-add_executable(unet_model trtexec.cpp)
+# add_executable(unet_model trtexec.cpp)
 
 
 target_link_libraries(mainapp ${GSTLIBS_LIBRARIES})
@@ -94,4 +93,4 @@ target_link_libraries(rtsp2webrtc ${GSTLIBS_LIBRARIES})
 target_link_libraries(rtsprestream ${GSTLIBS_LIBRARIES})
 target_link_libraries(gstrtptest ${GSTLIBS_LIBRARIES})
 target_link_libraries(rtspstreamappsrc ${GSTLIBS_LIBRARIES})
-target_link_libraries(unet_model ${PROJECT_NAME})
+# target_link_libraries(unet_model ${PROJECT_NAME})
