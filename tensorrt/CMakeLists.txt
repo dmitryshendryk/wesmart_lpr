@@ -74,8 +74,24 @@ target_link_libraries(
         ${NVPLUGIN}
         ${GSTLIBS_LIBRARIES})
 
+set(SOURCE_FILES_MAIN gstreamer/main.cpp)
+set(SOURCE_FILES_WEBRTC gstreamer/rtsp_webrtc.cpp)
+set(SOURCE_FILES_RTSP gstreamer/rtsp_restream_text.cpp)
+set(SOURCE_FILES_RTP_TEST gstreamer/gst_rtp_test.cpp)
+set(SOURCE_FILES_RTSP_APPSRC gstreamer/rtsp_stream_appsrc.cpp)
 
 
-add_executable( unet_model
-              trtexec.cpp)
+add_executable(mainapp ${SOURCE_FILES_MAIN})
+add_executable(rtsp2webrtc ${SOURCE_FILES_WEBRTC})
+add_executable(rtsprestream ${SOURCE_FILES_RTSP})
+add_executable(gstrtptest ${SOURCE_FILES_RTP_TEST})
+add_executable(rtspstreamappsrc ${SOURCE_FILES_RTSP_APPSRC})
+add_executable(unet_model trtexec.cpp)
+
+
+target_link_libraries(mainapp ${GSTLIBS_LIBRARIES})
+target_link_libraries(rtsp2webrtc ${GSTLIBS_LIBRARIES})
+target_link_libraries(rtsprestream ${GSTLIBS_LIBRARIES})
+target_link_libraries(gstrtptest ${GSTLIBS_LIBRARIES})
+target_link_libraries(rtspstreamappsrc ${GSTLIBS_LIBRARIES})
 target_link_libraries(unet_model ${PROJECT_NAME})
