@@ -12,6 +12,7 @@ set(HEADER_FILES ${INCLUDE_DIR}/logger.h ${INCLUDE_DIR}/buffers.h ${INCLUDE_DIR}
 find_library(NVINFER NAMES libnvinfer.so)
 find_library(NVPARSERS NAMES nvparsers)
 find_library(NVONNXPARSERS NAMES nvonnxparser)
+find_library(NVPLUGIN NAMES libnvinfer_plugin.so)
 find_package(CUDA  REQUIRED)
 
 include_directories (${INCLUDE_DIR} ${CMAKE_PREFIX_PATH} ${CUDA_INCLUDE_DIRS}) 
@@ -24,6 +25,7 @@ if(NVINFER)
    message("NVINFER: ${NVINFER}")
    message("NVPARSERS: ${NVPARSERS}")
    message("NVONNXPARSERS: ${NVONNXPARSERS}")
+   message("NVPLUGIN: ${NVPLUGIN}")
    set(TRT_AVAIL ON)
 else()
   message("TensorRT is NOT Available")
@@ -42,7 +44,7 @@ add_library(${PROJECT_NAME} SHARED
 
 )
 
-target_link_libraries(${PROJECT_NAME} ${CUDA_LIBRARIES} ${INCLUDE_DIR} ${NVINFER} ${NVPARSERS} ${NVONNXPARSERS})
+target_link_libraries(${PROJECT_NAME} ${CUDA_LIBRARIES} ${INCLUDE_DIR} ${NVINFER} ${NVPARSERS} ${NVONNXPARSERS} ${NVPLUGIN})
 
 
 
