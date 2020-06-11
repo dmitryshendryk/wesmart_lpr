@@ -1,59 +1,77 @@
 #include <gst/gst.h>
-#include <iostream>
-using namespace std;
+#include <glib.h>
 
+typedef struct {
+  GMainLoop* main_loop;
+  GstElement* pipeline;
+} main_loop_and_pipeline_t;
+static gboolean bus_call(GstBus *bus, GstMessage *msg, gpointer data) {
+  main_loop_and_pipeline_t *main_loop_and_pipeline =
+      (main_loop_and_pipeline_t*)data;
+  GMainLoop *loop = main_loop_and_pipeline->main_loop;
+  GstElement *pipeline = main_loop_and_pipeline->pipeline;
+  switch (GST_MESSAGE_TYPE (msg)) {
+    case GST_MESSAGE_EOS:
+      /* Reached end of input video - restart */
+      gst_element_set_state(pipeline, GST_STATE_READY);
+      gst_element_set_state(pipeline, GST_STATE_PLAYING);
+      break;
+    case GST_MESSAGE_ERROR: {
+      gchar *debug;
+      GError *error;
+      gst_message_parse_error(msg, &error, &debug);
+      g_free(debug);
+      g_printerr("Error: %s\n", error->message);
+      g_error_free(error);
+      g_main_loop_quit(loop);
+      break;
+    }
+    default:
+      break;
+  }
+  return TRUE;
+}
 int main(int argc, char *argv[]) {
-    GstElement *pipeline, *source, *sink;
-    GstBus *bus;
-    GstMessage *msg;
-    GMainLoop *loop;
-    GstStateChangeReturn ret;
-    //initialize all elements
-    gst_init(&argc, &argv);
-    pipeline = gst_pipeline_new ("pipeline");
-    source = gst_element_factory_make ("autovideosrc", "source");
-    sink = gst_element_factory_make ("autovideosink", "sink");
-
-    //check for null objects
-    if (!pipeline || !source || !sink) {
-        cout << "not all elements created: pipeline["<< !pipeline<< "]" << "source["<< !source<< "]" << "sink["<< !sink << "]" << endl;
-        return -1;
-    }
-
-    //set video source
-    g_object_set(G_OBJECT (source), "location", argv[1], NULL);
-    cout << "==>Set video source." << endl;
-    g_object_set(G_OBJECT (sink), "sync", FALSE, NULL);
-    cout << "==>Set video sink." << endl;
-
-    //add all elements together
-    gst_bin_add_many (GST_BIN (pipeline), source, sink, NULL);
-    if (gst_element_link (source, sink) != TRUE) {
-        cout << "Elements could not be linked." << endl;
-        gst_object_unref (pipeline);
-        return -1;
-    }
-    cout << "==>Link elements." << endl;
-
-    //set the pipeline state to playing
-    ret = gst_element_set_state (pipeline, GST_STATE_PLAYING);
-    if (ret == GST_STATE_CHANGE_FAILURE) {
-        cout << "Unable to set the pipeline to the playing state." << endl;
-        gst_object_unref (pipeline);
-        return -1;
-    }
-    cout << "==>Set video to play." << endl;
-
-    //get pipeline's bus
-    bus = gst_element_get_bus (pipeline);
-    cout << "==>Setup bus." << endl;
-
-    loop = g_main_loop_new(NULL, FALSE);
-    cout << "==>Begin stream." << endl;
-    g_main_loop_run(loop);
-
-    g_main_loop_unref(loop);
-    gst_object_unref (bus);
-    gst_element_set_state (pipeline, GST_STATE_NULL);
-    gst_object_unref (pipeline);
+  gst_init(&argc, &argv);
+  GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
+  /* Check input arguments */
+  if (argc != 5 || atoi(argv[2]) == 0 || atoi(argv[3]) == 0) {
+    g_printerr("Usage: %s <filename> <width> <height> <device>\n\n", argv[0]);
+    g_printerr("Arguments:\n");
+    g_printerr("  filename: Path to the video file.\n");
+    g_printerr("  width:    Video width.\n");
+    g_printerr("  height:   Video height.\n");
+    g_printerr("  device:   Device to write to (like /dev/video1).\n");
+    return -1;
+  }
+  /* Create gstreamer pipeline elements. */
+  GstElement *pipeline = gst_pipeline_new("looping-video-player");
+  GstElement *source = gst_element_factory_make("filesrc", "file-source");
+  GstElement *parse = gst_element_factory_make("videoparse", "video-parse");
+  GstElement *v4l2_sink = gst_element_factory_make("v4l2sink", "v4l2-sink");
+  if (!pipeline || !source || !parse || !v4l2_sink) {
+    g_printerr("One GST element could not be created. Exiting.\n");
+    return -1;
+  }
+  /* Set up input parameters. */
+  g_object_set(G_OBJECT (source), "location", argv[1], NULL);
+  g_object_set(G_OBJECT (parse), "width", atoi(argv[2]), NULL);
+  g_object_set(G_OBJECT (parse), "height", atoi(argv[3]), NULL);
+  g_object_set(G_OBJECT (v4l2_sink), "device", argv[4], NULL);
+  /* Add a callback to we can react to end-of-stream and errors. */
+  main_loop_and_pipeline_t main_loop_and_pipeline;
+  main_loop_and_pipeline.main_loop = main_loop;
+  main_loop_and_pipeline.pipeline = pipeline;
+  GstBus *bus = gst_pipeline_get_bus(GST_PIPELINE (pipeline));
+  gst_bus_add_watch(bus, bus_call, &main_loop_and_pipeline);
+  gst_object_unref(bus);
+  /* Assemble the pipeline. */
+  gst_bin_add_many(GST_BIN (pipeline), source, parse, v4l2_sink, NULL);
+  gst_element_link(source, parse);
+  gst_element_link(parse, v4l2_sink);
+  /* Start playing. */
+  gst_element_set_state(pipeline, GST_STATE_PLAYING);
+  g_main_loop_run(main_loop);
+  /* Never reached. */
+  return 0;
 }
