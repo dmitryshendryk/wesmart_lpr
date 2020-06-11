@@ -15,6 +15,12 @@ find_library(NVONNXPARSERS NAMES nvonnxparser)
 find_library(NVPLUGIN NAMES libnvinfer_plugin.so)
 find_package(CUDA  REQUIRED)
 
+find_package(GStreamer)
+if(GStreamer_FOUND)
+  message(STATUS "FOUND!!")
+  include_directories(${GSTREAMER_INCLUDE_DIRS})
+endif()
+
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GSTLIBS REQUIRED
         gobject-2.0
@@ -63,15 +69,15 @@ add_library(${PROJECT_NAME} SHARED
 
 )
 
-# target_link_libraries(
-#         ${PROJECT_NAME} 
-#         ${CUDA_LIBRARIES} 
-#         ${INCLUDE_DIR} 
-#         ${NVINFER} 
-#         ${NVPARSERS} 
-#         ${NVONNXPARSERS} 
-#         ${NVPLUGIN}
-#         ${GSTLIBS_LIBRARIES})
+target_link_libraries(
+        ${PROJECT_NAME} 
+        ${CUDA_LIBRARIES} 
+        ${INCLUDE_DIR} 
+        ${NVINFER} 
+        ${NVPARSERS} 
+        ${NVONNXPARSERS} 
+        ${NVPLUGIN}
+        ${GSTLIBS_LIBRARIES})
 
 set(SOURCE_FILES_MAIN ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/main.cpp)
 set(SOURCE_FILES_WEBRTC ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/rtsp_webrtc.cpp)
@@ -88,9 +94,9 @@ add_executable(rtspstreamappsrc ${SOURCE_FILES_RTSP_APPSRC})
 # add_executable(unet_model trtexec.cpp)
 
 
-target_link_libraries(mainapp ${GSTLIBS_LIBRARIES})
-target_link_libraries(rtsp2webrtc ${GSTLIBS_LIBRARIES})
-target_link_libraries(rtsprestream ${GSTLIBS_LIBRARIES})
-target_link_libraries(gstrtptest ${GSTLIBS_LIBRARIES})
-target_link_libraries(rtspstreamappsrc ${GSTLIBS_LIBRARIES})
+target_link_libraries(mainapp ${GSTREAMER_LIBRARIES})
+target_link_libraries(rtsp2webrtc ${GSTREAMER_LIBRARIES})
+target_link_libraries(rtsprestream ${GSTREAMER_LIBRARIES})
+target_link_libraries(gstrtptest ${GSTREAMER_LIBRARIES})
+target_link_libraries(rtspstreamappsrc ${GSTREAMER_LIBRARIES})
 # target_link_libraries(unet_model ${PROJECT_NAME})
