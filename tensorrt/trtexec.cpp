@@ -32,6 +32,7 @@
 
 #include "NvInfer.h"
 #include "NvInferPlugin.h"
+#include "NvInferRuntime.h"
 
 #include "buffers.h"
 #include "common.h"
