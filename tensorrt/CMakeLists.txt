@@ -39,9 +39,9 @@ include_directories (
         ${CUDA_INCLUDE_DIRS}
         /usr/lib/x86_64-linux-gnu/glib-2.0/include
         /usr/include/glib-2.0
-        /usr/local/include/gstreamer-1.0
-        /usr/local/include/libsoup-2.4
-        /usr/local/include/json-glib-1.0) 
+        /usr/include/gstreamer-1.0
+        /usr/include/libsoup-2.4
+        /usr/include/json-glib-1.0) 
 
 link_directories( ${INCLUDE_DIR} ${CMAKE_PREFIX_PATH} ${GSTLIBS_LIBRARY_DIRS})
 
@@ -89,18 +89,18 @@ set(SOURCE_FILES_MAIN ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/main.cpp)
 set(SOURCE_FILES_WEBRTC ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/rtsp_webrtc.cpp)
 set(SOURCE_FILES_RTSP ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/rtsp_restream_text.cpp)
 set(SOURCE_FILES_RTP_TEST ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/gst_rtp_test.cpp)
-# set(SOURCE_FILES_RTSP_APPSRC ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/rtsp_stream_appsrc.cpp)
+set(SOURCE_FILES_RTSP_APPSRC ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/rtsp_stream_appsrc.cpp)
 
 
 add_executable(mainapp ${SOURCE_FILES_MAIN})
 add_executable(rtsp2webrtc ${SOURCE_FILES_WEBRTC})
 add_executable(rtsprestream ${SOURCE_FILES_RTSP})
 add_executable(gstrtptest ${SOURCE_FILES_RTP_TEST})
-# add_executable(rtspstreamappsrc ${SOURCE_FILES_RTSP_APPSRC})
+add_executable(rtspstreamappsrc ${SOURCE_FILES_RTSP_APPSRC})
 
 
 target_link_libraries(mainapp ${GSTREAMER_LIBRARIES})
 target_link_libraries(rtsp2webrtc ${GSTREAMER_LIBRARIES})
 target_link_libraries(rtsprestream ${GSTREAMER_LIBRARIES})
 target_link_libraries(gstrtptest ${GSTREAMER_LIBRARIES})
-# target_link_libraries(rtspstreamappsrc ${GSTREAMER_LIBRARIES})
+target_link_libraries(rtspstreamappsrc ${GSTREAMER_LIBRARIES})
