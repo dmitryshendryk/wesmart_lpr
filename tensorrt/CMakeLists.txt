@@ -74,11 +74,11 @@ target_link_libraries(
         ${NVPLUGIN}
         ${GSTLIBS_LIBRARIES})
 
-set(SOURCE_FILES_MAIN gstreamer/main.cpp)
-set(SOURCE_FILES_WEBRTC gstreamer/rtsp_webrtc.cpp)
-set(SOURCE_FILES_RTSP gstreamer/rtsp_restream_text.cpp)
-set(SOURCE_FILES_RTP_TEST gstreamer/gst_rtp_test.cpp)
-set(SOURCE_FILES_RTSP_APPSRC gstreamer/rtsp_stream_appsrc.cpp)
+set(SOURCE_FILES_MAIN ../gstreamer/main.cpp)
+set(SOURCE_FILES_WEBRTC ../gstreamer/rtsp_webrtc.cpp)
+set(SOURCE_FILES_RTSP ../gstreamer/rtsp_restream_text.cpp)
+set(SOURCE_FILES_RTP_TEST ../gstreamer/gst_rtp_test.cpp)
+set(SOURCE_FILES_RTSP_APPSRC ../gstreamer/rtsp_stream_appsrc.cpp)
 
 
 add_executable(mainapp ${SOURCE_FILES_MAIN})
