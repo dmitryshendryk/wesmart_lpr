@@ -38,6 +38,7 @@ add_library(${PROJECT_NAME} SHARED
   ${INCLUDE_DIR}/sampleEngines.cpp
   ${INCLUDE_DIR}/sampleInference.cpp
   ${INCLUDE_DIR}/sampleReporting.cpp
+  ${INCLUDE_DIR}/sampleOptions.cpp
 
 )
 
