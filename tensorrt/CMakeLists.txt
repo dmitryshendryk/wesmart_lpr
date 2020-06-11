@@ -30,24 +30,19 @@ else()
   set(TRT_AVAIL OFF)
 endif()
 
-# SET(SAMPLE_SOURCES
-#     trtexec.cpp
-# )
-
-
-
 add_library(${PROJECT_NAME} SHARED 
   ${INCLUDE_DIR}/logger.cpp
   ${INCLUDE_DIR}/logger.h
   ${INCLUDE_DIR}/buffers.h
   ${INCLUDE_DIR}/common.h
+  ${INCLUDE_DIR}/sampleEngines.cpp
+  ${INCLUDE_DIR}/sampleInference.cpp
+  ${INCLUDE_DIR}/sampleReporting.cpp
 
 )
 
 target_link_libraries(${PROJECT_NAME} ${CUDA} ${INCLUDE_DIR})
 
-
-# add_executable( ${PROJECT_NAME} trtexec.cpp )
 
 
 add_executable( unet_model
