@@ -42,7 +42,7 @@ add_library(${PROJECT_NAME} SHARED
 
 )
 
-target_link_libraries(${PROJECT_NAME} ${CUDA_LIBRARIES} ${INCLUDE_DIR} ${NVINFER})
+target_link_libraries(${PROJECT_NAME} ${CUDA_LIBRARIES} ${INCLUDE_DIR} ${NVINFER} ${NVPARSERS} ${NVONNXPARSERS})
 
 
 
