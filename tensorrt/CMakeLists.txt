@@ -99,8 +99,8 @@ add_executable(gstrtptest ${SOURCE_FILES_RTP_TEST})
 add_executable(rtspstreamappsrc ${SOURCE_FILES_RTSP_APPSRC})
 
 
-target_link_libraries(mainapp ${GSTREAMER_LIBRARIES})
-target_link_libraries(rtsp2webrtc ${GSTREAMER_LIBRARIES})
-target_link_libraries(rtsprestream ${GSTREAMER_LIBRARIES})
-target_link_libraries(gstrtptest ${GSTREAMER_LIBRARIES})
-target_link_libraries(rtspstreamappsrc ${GSTREAMER_LIBRARIES})
+target_link_libraries(mainapp ${GSTLIBS_LIBRARIES})
+target_link_libraries(rtsp2webrtc ${GSTLIBS_LIBRARIES})
+target_link_libraries(rtsprestream ${GSTLIBS_LIBRARIES})
+target_link_libraries(gstrtptest ${GSTLIBS_LIBRARIES})
+target_link_libraries(rtspstreamappsrc ${GSTLIBS_LIBRARIES})
