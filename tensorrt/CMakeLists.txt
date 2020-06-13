@@ -38,7 +38,7 @@ include_directories (
         ${INCLUDE_DIR} 
         ${CMAKE_PREFIX_PATH} 
         ${CUDA_INCLUDE_DIRS}
-        /usr/lib/x86_64-linux-gnu/glib-2.0/include
+        /usr/lib/aarch64-linux-gnu/glib-2.0/include
         /usr/include/glib-2.0
         /usr/include/gstreamer-1.0
         /usr/include/libsoup-2.4
