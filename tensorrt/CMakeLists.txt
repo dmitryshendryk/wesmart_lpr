@@ -16,7 +16,6 @@ find_library(NVONNXPARSERS NAMES nvonnxparser)
 find_library(NVPLUGIN NAMES libnvinfer_plugin.so)
 find_package(CUDA  REQUIRED)
 
-find_package(GStreamer)
 if(GStreamer_FOUND)
   message(STATUS "FOUND!!")
   include_directories(${GSTREAMER_INCLUDE_DIRS})
