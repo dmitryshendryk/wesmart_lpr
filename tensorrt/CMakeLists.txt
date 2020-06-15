@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 
 
 project(trt)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED on)
 
 
@@ -19,7 +19,8 @@ find_library(NVPLUGIN NAMES libnvinfer_plugin.so)
 find_package(CUDA  REQUIRED)
 find_package(OpenCV REQUIRED)
 
-SET ( CMAKE_CXX_FLAGS "--expt-extended-lambda" CACHE STRING "compile flags" FORCE)
+# SET ( CMAKE_CXX_FLAGS "--expt-extended-lambda" CACHE STRING "compile flags" FORCE)
+set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS};-std=c++11;--expt-extended-lambda;)
 
 # list(APPEND CUDA_NVCC_FLAGS "--extended-lambda")
 # set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS})
