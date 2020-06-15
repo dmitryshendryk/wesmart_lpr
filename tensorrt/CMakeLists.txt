@@ -20,15 +20,21 @@ find_package(CUDA  REQUIRED)
 find_package(OpenCV REQUIRED)
 
 # SET ( CMAKE_CXX_FLAGS "--expt-extended-lambda" CACHE STRING "compile flags" FORCE)
-set(CMAKE_CUDA_FLAGS ${CMAKE_CUDA_FLAGS};-std=c++11;--expt-extended-lambda;)
+# set(CMAKE_CUDA_FLAGS ${CMAKE_CUDA_FLAGS};-std=c++11;--expt-extended-lambda;)
 
 # list(APPEND CUDA_NVCC_FLAGS "--extended-lambda")
 # set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS})
 # add nvcc flags to generate code for all enabled architectures
 
-
-
 enable_language(CUDA)
+
+list(APPEND CUDA_NVCC_FLAGS "-std=c++11")
+# enable device lambda support
+# xxxnsubtil: not usable yet
+list(APPEND CUDA_NVCC_FLAGS "--expt-extended-lambda")
+
+# set optimization flags
+set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -use_fast_math)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GSTLIBS REQUIRED
@@ -80,10 +86,6 @@ endif()
 
 # )
 
-set_target_properties(trt_engine PROPERTIES
-  CUDA_RESOLVE_DEVICE_SYMBOLS ON
-)
-
 add_library(trt_engine SHARED
   ./csrc/cuda/decode.h
   ./csrc/cuda/decode.cu
@@ -107,7 +109,9 @@ add_library(trt_engine SHARED
   ${INCLUDE_DIR}/sampleOptions.cpp
 )
 
-
+set_target_properties(trt_engine PROPERTIES
+  CUDA_RESOLVE_DEVICE_SYMBOLS ON
+)
 
 
 # target_link_libraries(
