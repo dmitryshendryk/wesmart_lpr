@@ -28,13 +28,13 @@ find_package(OpenCV REQUIRED)
 
 enable_language(CUDA)
 
-list(APPEND CUDA_NVCC_FLAGS "-std=c++11")
+# list(APPEND CUDA_NVCC_FLAGS "-std=c++11")
 # enable device lambda support
 # xxxnsubtil: not usable yet
-list(APPEND CUDA_NVCC_FLAGS "--expt-extended-lambda")
+# list(APPEND CUDA_NVCC_FLAGS "--expt-extended-lambda")
 
 # set optimization flags
-set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -use_fast_math)
+# set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} -use_fast_math)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GSTLIBS REQUIRED
@@ -128,20 +128,8 @@ add_library(${PROJECT_NAME} SHARED
 
 
 
-add_executable(unet_model trtexec.cpp)
-target_link_libraries(unet_model 
-        ${PROJECT_NAME}
-        ${CUDA_LIBRARIES} 
-        ${INCLUDE_DIR} 
-        ${NVINFER} 
-        ${NVPARSERS} 
-        ${NVONNXPARSERS} 
-        ${NVPLUGIN}
-        ${GSTLIBS_LIBRARIES}
-        ${OpenCV_LIBS})
-
-# add_executable(infer infer.cpp)
-# target_link_libraries(infer 
+# add_executable(unet_model trtexec.cpp)
+# target_link_libraries(unet_model 
 #         ${PROJECT_NAME}
 #         ${CUDA_LIBRARIES} 
 #         ${INCLUDE_DIR} 
@@ -151,6 +139,18 @@ target_link_libraries(unet_model
 #         ${NVPLUGIN}
 #         ${GSTLIBS_LIBRARIES}
 #         ${OpenCV_LIBS})
+
+add_executable(infer infer.cpp)
+target_link_libraries(infer 
+        ${PROJECT_NAME}
+        ${CUDA_LIBRARIES} 
+        ${INCLUDE_DIR} 
+        ${NVINFER} 
+        ${NVPARSERS} 
+        ${NVONNXPARSERS} 
+        ${NVPLUGIN}
+        ${GSTLIBS_LIBRARIES}
+        ${OpenCV_LIBS})
   
 # add_executable(infervideo infervideo.cpp)
 # target_link_libraries(infervideo 
