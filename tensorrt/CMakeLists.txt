@@ -15,19 +15,14 @@ find_library(NVONNXPARSERS NAMES nvonnxparser)
 find_library(NVPLUGIN NAMES libnvinfer_plugin.so)
 find_package(CUDA  REQUIRED)
 
-list(APPEND CUDA_NVCC_FLAGS "--expt-extended-lambda")
-set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS})
+# list(APPEND CUDA_NVCC_FLAGS "--expt-extended-lambda")
+# set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS})
 # add nvcc flags to generate code for all enabled architectures
 
 
 
 enable_language(CUDA)
 find_package(OpenCV REQUIRED)
-
-if(GStreamer_FOUND)
-  message(STATUS "FOUND!!")
-  include_directories(${GSTREAMER_INCLUDE_DIRS})
-endif()
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GSTLIBS REQUIRED
@@ -98,8 +93,24 @@ set_target_properties(trt_engine PROPERTIES
 )
 
 
-target_link_libraries(
-        ${PROJECT_NAME} 
+# target_link_libraries(
+#         ${PROJECT_NAME} 
+#         ${CUDA_LIBRARIES} 
+#         ${INCLUDE_DIR} 
+#         ${NVINFER} 
+#         ${NVPARSERS} 
+#         ${NVONNXPARSERS} 
+#         ${NVPLUGIN}
+#         ${GSTLIBS_LIBRARIES}
+#         ${OpenCV_LIBS}
+#         trt_engine)
+
+
+
+add_executable(unet_model trtexec.cpp)
+target_link_libraries(unet_model 
+        ${PROJECT_NAME}
+        cuda
         ${CUDA_LIBRARIES} 
         ${INCLUDE_DIR} 
         ${NVINFER} 
@@ -111,30 +122,25 @@ target_link_libraries(
         trt_engine)
 
 
-
-add_executable(unet_model trtexec.cpp)
-target_link_libraries(unet_model ${PROJECT_NAME})
-
-
-set(SOURCE_FILES_MAIN ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/main.cpp)
-set(SOURCE_FILES_MAIN ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/gst_video.cpp)
-set(SOURCE_FILES_WEBRTC ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/rtsp_webrtc.cpp)
-set(SOURCE_FILES_RTSP ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/rtsp_restream_text.cpp)
-set(SOURCE_FILES_RTP_TEST ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/gst_rtp_test.cpp)
-set(SOURCE_FILES_RTSP_APPSRC ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/rtsp_stream_appsrc.cpp)
+# set(SOURCE_FILES_MAIN ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/main.cpp)
+# set(SOURCE_FILES_MAIN ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/gst_video.cpp)
+# set(SOURCE_FILES_WEBRTC ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/rtsp_webrtc.cpp)
+# set(SOURCE_FILES_RTSP ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/rtsp_restream_text.cpp)
+# set(SOURCE_FILES_RTP_TEST ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/gst_rtp_test.cpp)
+# set(SOURCE_FILES_RTSP_APPSRC ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/rtsp_stream_appsrc.cpp)
 
 
-add_executable(mainapp ${SOURCE_FILES_MAIN})
-add_executable(run_video ${SOURCE_FILES_MAIN})
-add_executable(rtsp2webrtc ${SOURCE_FILES_WEBRTC})
-add_executable(rtsprestream ${SOURCE_FILES_RTSP})
-add_executable(gstrtptest ${SOURCE_FILES_RTP_TEST})
-add_executable(rtspstreamappsrc ${SOURCE_FILES_RTSP_APPSRC})
+# add_executable(mainapp ${SOURCE_FILES_MAIN})
+# add_executable(run_video ${SOURCE_FILES_MAIN})
+# add_executable(rtsp2webrtc ${SOURCE_FILES_WEBRTC})
+# add_executable(rtsprestream ${SOURCE_FILES_RTSP})
+# add_executable(gstrtptest ${SOURCE_FILES_RTP_TEST})
+# add_executable(rtspstreamappsrc ${SOURCE_FILES_RTSP_APPSRC})
 
 
-target_link_libraries(mainapp ${GSTLIBS_LIBRARIES})
-target_link_libraries(run_video ${GSTLIBS_LIBRARIES})
-target_link_libraries(rtsp2webrtc ${GSTLIBS_LIBRARIES})
-target_link_libraries(rtsprestream ${GSTLIBS_LIBRARIES})
-target_link_libraries(gstrtptest ${GSTLIBS_LIBRARIES})
-target_link_libraries(rtspstreamappsrc ${GSTLIBS_LIBRARIES})
+# target_link_libraries(mainapp ${GSTLIBS_LIBRARIES})
+# target_link_libraries(run_video ${GSTLIBS_LIBRARIES})
+# target_link_libraries(rtsp2webrtc ${GSTLIBS_LIBRARIES})
+# target_link_libraries(rtsprestream ${GSTLIBS_LIBRARIES})
+# target_link_libraries(gstrtptest ${GSTLIBS_LIBRARIES})
+# target_link_libraries(rtspstreamappsrc ${GSTLIBS_LIBRARIES})
