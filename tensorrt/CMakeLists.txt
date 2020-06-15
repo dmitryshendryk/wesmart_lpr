@@ -16,6 +16,9 @@ find_library(NVPLUGIN NAMES libnvinfer_plugin.so)
 find_package(CUDA  REQUIRED)
 
 list(APPEND CUDA_NVCC_FLAGS "--expt-extended-lambda")
+set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS})
+# add nvcc flags to generate code for all enabled architectures
+
 
 
 enable_language(CUDA)
