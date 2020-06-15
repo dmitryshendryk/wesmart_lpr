@@ -141,6 +141,31 @@ target_link_libraries(unet_model
         ${GSTLIBS_LIBRARIES}
         ${OpenCV_LIBS})
 
+add_executable(infer infer.cpp)
+target_link_libraries(infer 
+        ${PROJECT_NAME}
+        cuda
+        ${CUDA_LIBRARIES} 
+        ${INCLUDE_DIR} 
+        ${NVINFER} 
+        ${NVPARSERS} 
+        ${NVONNXPARSERS} 
+        ${NVPLUGIN}
+        ${GSTLIBS_LIBRARIES}
+        ${OpenCV_LIBS})
+  
+add_executable(infervideo infervideo.cpp)
+target_link_libraries(infer 
+        ${PROJECT_NAME}
+        cuda
+        ${CUDA_LIBRARIES} 
+        ${INCLUDE_DIR} 
+        ${NVINFER} 
+        ${NVPARSERS} 
+        ${NVONNXPARSERS} 
+        ${NVPLUGIN}
+        ${GSTLIBS_LIBRARIES}
+        ${OpenCV_LIBS})
 
 # set(SOURCE_FILES_MAIN ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/main.cpp)
 # set(SOURCE_FILES_MAIN ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/gst_video.cpp)
