@@ -18,8 +18,8 @@ find_package(CUDA  REQUIRED)
 find_package(OpenCV REQUIRED)
 
 
-# list(APPEND CUDA_NVCC_FLAGS "--expt-extended-lambda")
-# set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS})
+list(APPEND CUDA_NVCC_FLAGS "--extended-lambda")
+set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS})
 # add nvcc flags to generate code for all enabled architectures
 
 
