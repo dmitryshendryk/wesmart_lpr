@@ -140,8 +140,8 @@ add_library(${PROJECT_NAME} SHARED
 #         ${GSTLIBS_LIBRARIES}
 #         ${OpenCV_LIBS})
 
-add_executable(infer infer.cpp)
-target_link_libraries(infer 
+add_executable(infer_model infer.cpp)
+target_link_libraries(infer_model 
         ${PROJECT_NAME}
         ${CUDA_LIBRARIES} 
         ${INCLUDE_DIR} 
