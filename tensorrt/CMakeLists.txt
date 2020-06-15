@@ -86,7 +86,7 @@ endif()
 
 # )
 
-add_library(trt_engine SHARED
+add_library(${PROJECT_NAME} SHARED
   # ./csrc/cuda/decode.h
   # ./csrc/cuda/decode.cu
   # ./csrc/cuda/nms.h
@@ -131,7 +131,6 @@ set_target_properties(trt_engine PROPERTIES
 add_executable(unet_model trtexec.cpp)
 target_link_libraries(unet_model 
         ${PROJECT_NAME}
-        trt_engine
         cuda
         ${CUDA_LIBRARIES} 
         ${INCLUDE_DIR} 
