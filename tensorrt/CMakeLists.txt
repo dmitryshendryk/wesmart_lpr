@@ -80,6 +80,10 @@ endif()
 
 # )
 
+set_target_properties(trt_engine PROPERTIES
+  CUDA_RESOLVE_DEVICE_SYMBOLS ON
+)
+
 add_library(trt_engine SHARED
   ./csrc/cuda/decode.h
   ./csrc/cuda/decode.cu
@@ -103,9 +107,7 @@ add_library(trt_engine SHARED
   ${INCLUDE_DIR}/sampleOptions.cpp
 )
 
-set_target_properties(trt_engine PROPERTIES
-  CUDA_RESOLVE_DEVICE_SYMBOLS ON
-)
+
 
 
 # target_link_libraries(
