@@ -109,9 +109,9 @@ add_library(${PROJECT_NAME} SHARED
   ${INCLUDE_DIR}/sampleOptions.cpp
 )
 
-set_target_properties(trt_engine PROPERTIES
-  CUDA_RESOLVE_DEVICE_SYMBOLS ON
-)
+# set_target_properties(trt_engine PROPERTIES
+#   CUDA_RESOLVE_DEVICE_SYMBOLS ON
+# )
 
 
 # target_link_libraries(
