@@ -5,7 +5,6 @@ cmake_minimum_required(VERSION 3.10)
 project(trt)
 
 
-# set(CMAKE_PREFIX_PATH "/home/wesmart/Documents/apps/TensorRT-7.0.0.11/lib/") 
 set(CMAKE_PREFIX_PATH "/usr/lib/aarch64-linux-gnu") 
 set(INCLUDE_DIR "/usr/src/tensorrt/samples/common/") 
 set(HEADER_FILES ${INCLUDE_DIR}/logger.h ${INCLUDE_DIR}/buffers.h ${INCLUDE_DIR}/common.h)
@@ -15,6 +14,9 @@ find_library(NVPARSERS NAMES nvparsers)
 find_library(NVONNXPARSERS NAMES nvonnxparser)
 find_library(NVPLUGIN NAMES libnvinfer_plugin.so)
 find_package(CUDA  REQUIRED)
+
+enable_language(CUDA)
+find_package(OpenCV REQUIRED)
 
 if(GStreamer_FOUND)
   message(STATUS "FOUND!!")
@@ -37,6 +39,7 @@ include_directories (
         ${INCLUDE_DIR} 
         ${CMAKE_PREFIX_PATH} 
         ${CUDA_INCLUDE_DIRS}
+        ${OpenCV_INCLUDE_DIRS}
         /usr/lib/aarch64-linux-gnu/glib-2.0/include
         /usr/include/glib-2.0
         /usr/include/gstreamer-1.0
@@ -69,6 +72,24 @@ add_library(${PROJECT_NAME} SHARED
 
 )
 
+add_library(trt_engine SHARED
+  ./csrc/cuda/decode.h
+  ./csrc/cuda/decode.cu
+  ./csrc/cuda/nms.h
+  ./csrc/cuda/nms.cu
+  ./csrc/cuda/decode_rotate.h
+  ./csrc/cuda/decode_rotate.cu
+  ./csrc/cuda/nms_iou.h
+  ./csrc/cuda/nms_iou.cu
+  ./csrc/cuda/utils.h
+  ./csrc/engine.h
+  ./csrc/engine.cpp
+  ./csrc/calibrator.h
+)
+
+
+
+
 target_link_libraries(
         ${PROJECT_NAME} 
         ${CUDA_LIBRARIES} 
@@ -77,7 +98,9 @@ target_link_libraries(
         ${NVPARSERS} 
         ${NVONNXPARSERS} 
         ${NVPLUGIN}
-        ${GSTLIBS_LIBRARIES})
+        ${GSTLIBS_LIBRARIES}
+        ${OpenCV_LIBS}
+        trt_engine)
 
 
 
