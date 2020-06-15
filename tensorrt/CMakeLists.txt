@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 3.10)
 
 project(trt)
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED on)
+
 
 set(CMAKE_PREFIX_PATH "/usr/lib/aarch64-linux-gnu") 
 set(INCLUDE_DIR "/usr/src/tensorrt/samples/common/") 
@@ -17,9 +19,10 @@ find_library(NVPLUGIN NAMES libnvinfer_plugin.so)
 find_package(CUDA  REQUIRED)
 find_package(OpenCV REQUIRED)
 
+SET ( CMAKE_CXX_FLAGS "--expt-extended-lambda" CACHE STRING "compile flags" FORCE)
 
-list(APPEND CUDA_NVCC_FLAGS "--extended-lambda")
-set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS})
+# list(APPEND CUDA_NVCC_FLAGS "--extended-lambda")
+# set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS})
 # add nvcc flags to generate code for all enabled architectures
 
 
