@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 
 
 project(trt)
-
+set(CMAKE_CXX_STANDARD 14)
 
 set(CMAKE_PREFIX_PATH "/usr/lib/aarch64-linux-gnu") 
 set(INCLUDE_DIR "/usr/src/tensorrt/samples/common/") 
@@ -13,7 +13,10 @@ find_library(NVINFER NAMES libnvinfer.so)
 find_library(NVPARSERS NAMES nvparsers)
 find_library(NVONNXPARSERS NAMES nvonnxparser)
 find_library(NVPLUGIN NAMES libnvinfer_plugin.so)
+
 find_package(CUDA  REQUIRED)
+find_package(OpenCV REQUIRED)
+
 
 # list(APPEND CUDA_NVCC_FLAGS "--expt-extended-lambda")
 # set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS})
@@ -22,7 +25,6 @@ find_package(CUDA  REQUIRED)
 
 
 enable_language(CUDA)
-find_package(OpenCV REQUIRED)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GSTLIBS REQUIRED
@@ -41,13 +43,14 @@ include_directories (
         ${CMAKE_PREFIX_PATH} 
         ${CUDA_INCLUDE_DIRS}
         ${OpenCV_INCLUDE_DIRS}
+        ${GSTLIBS_LIBRARY_DIRS}
         /usr/lib/aarch64-linux-gnu/glib-2.0/include
         /usr/include/glib-2.0
         /usr/include/gstreamer-1.0
         /usr/include/libsoup-2.4
         /usr/include/json-glib-1.0) 
 
-link_directories( ${INCLUDE_DIR} ${CMAKE_PREFIX_PATH} ${GSTLIBS_LIBRARY_DIRS})
+# link_directories( ${INCLUDE_DIR} ${CMAKE_PREFIX_PATH} )
 
 if(NVINFER)
    message("TensorRT is available!")
@@ -61,17 +64,17 @@ else()
   set(TRT_AVAIL OFF)
 endif()
 
-add_library(${PROJECT_NAME} SHARED 
-  ${INCLUDE_DIR}/logger.cpp
-  ${INCLUDE_DIR}/logger.h
-  ${INCLUDE_DIR}/buffers.h
-  ${INCLUDE_DIR}/common.h
-  ${INCLUDE_DIR}/sampleEngines.cpp
-  ${INCLUDE_DIR}/sampleInference.cpp
-  ${INCLUDE_DIR}/sampleReporting.cpp
-  ${INCLUDE_DIR}/sampleOptions.cpp
+# add_library(${PROJECT_NAME} SHARED 
+#   ${INCLUDE_DIR}/logger.cpp
+#   ${INCLUDE_DIR}/logger.h
+#   ${INCLUDE_DIR}/buffers.h
+#   ${INCLUDE_DIR}/common.h
+#   ${INCLUDE_DIR}/sampleEngines.cpp
+#   ${INCLUDE_DIR}/sampleInference.cpp
+#   ${INCLUDE_DIR}/sampleReporting.cpp
+#   ${INCLUDE_DIR}/sampleOptions.cpp
 
-)
+# )
 
 add_library(trt_engine SHARED
   ./csrc/cuda/decode.h
@@ -86,6 +89,14 @@ add_library(trt_engine SHARED
   ./csrc/engine.h
   ./csrc/engine.cpp
   ./csrc/calibrator.h
+  ${INCLUDE_DIR}/logger.cpp
+  ${INCLUDE_DIR}/logger.h
+  ${INCLUDE_DIR}/buffers.h
+  ${INCLUDE_DIR}/common.h
+  ${INCLUDE_DIR}/sampleEngines.cpp
+  ${INCLUDE_DIR}/sampleInference.cpp
+  ${INCLUDE_DIR}/sampleReporting.cpp
+  ${INCLUDE_DIR}/sampleOptions.cpp
 )
 
 set_target_properties(trt_engine PROPERTIES
@@ -110,6 +121,7 @@ set_target_properties(trt_engine PROPERTIES
 add_executable(unet_model trtexec.cpp)
 target_link_libraries(unet_model 
         ${PROJECT_NAME}
+        trt_engine
         cuda
         ${CUDA_LIBRARIES} 
         ${INCLUDE_DIR} 
@@ -118,8 +130,7 @@ target_link_libraries(unet_model
         ${NVONNXPARSERS} 
         ${NVPLUGIN}
         ${GSTLIBS_LIBRARIES}
-        ${OpenCV_LIBS}
-        trt_engine)
+        ${OpenCV_LIBS})
 
 
 # set(SOURCE_FILES_MAIN ${CMAKE_CURRENT_SOURCE_DIR}/gstreamer/main.cpp)
