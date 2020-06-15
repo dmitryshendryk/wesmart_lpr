@@ -155,7 +155,7 @@ target_link_libraries(infer
         ${OpenCV_LIBS})
   
 add_executable(infervideo infervideo.cpp)
-target_link_libraries(infer 
+target_link_libraries(infervideo 
         ${PROJECT_NAME}
         cuda
         ${CUDA_LIBRARIES} 
