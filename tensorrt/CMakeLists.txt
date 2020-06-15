@@ -87,14 +87,14 @@ endif()
 # )
 
 add_library(trt_engine SHARED
-  ./csrc/cuda/decode.h
-  ./csrc/cuda/decode.cu
-  ./csrc/cuda/nms.h
-  ./csrc/cuda/nms.cu
-  ./csrc/cuda/decode_rotate.h
-  ./csrc/cuda/decode_rotate.cu
-  ./csrc/cuda/nms_iou.h
-  ./csrc/cuda/nms_iou.cu
+  # ./csrc/cuda/decode.h
+  # ./csrc/cuda/decode.cu
+  # ./csrc/cuda/nms.h
+  # ./csrc/cuda/nms.cu
+  # ./csrc/cuda/decode_rotate.h
+  # ./csrc/cuda/decode_rotate.cu
+  # ./csrc/cuda/nms_iou.h
+  # ./csrc/cuda/nms_iou.cu
   ./csrc/cuda/utils.h
   ./csrc/engine.h
   ./csrc/engine.cpp

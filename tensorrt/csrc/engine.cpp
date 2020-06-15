@@ -28,10 +28,10 @@
 #include <NvOnnxConfig.h>
 #include <NvOnnxParser.h>
 
-#include "plugins/DecodePlugin.h"
-#include "plugins/NMSPlugin.h"
-#include "plugins/DecodeRotatePlugin.h"
-#include "plugins/NMSRotatePlugin.h"
+// #include "plugins/DecodePlugin.h"
+// #include "plugins/NMSPlugin.h"
+// #include "plugins/DecodeRotatePlugin.h"
+// #include "plugins/NMSRotatePlugin.h"
 #include "calibrator.h"
 
 using namespace nvinfer1;
@@ -88,106 +88,106 @@ Engine::~Engine() {
     if (_runtime) _runtime->destroy();
 }
 
-Engine::Engine(const char *onnx_model, size_t onnx_size, size_t batch, string precision,
-    float score_thresh, int top_n, const vector<vector<float>>& anchors, bool rotated,
-    float nms_thresh, int detections_per_im, const vector<string>& calibration_images, 
-    string model_name, string calibration_table, bool verbose, size_t workspace_size) {
+// Engine::Engine(const char *onnx_model, size_t onnx_size, size_t batch, string precision,
+//     float score_thresh, int top_n, const vector<vector<float>>& anchors, bool rotated,
+//     float nms_thresh, int detections_per_im, const vector<string>& calibration_images, 
+//     string model_name, string calibration_table, bool verbose, size_t workspace_size) {
 
-    Logger logger(verbose);
-    _runtime = createInferRuntime(logger);
+//     Logger logger(verbose);
+//     _runtime = createInferRuntime(logger);
 
-    bool fp16 = precision.compare("FP16") == 0;
-    bool int8 = precision.compare("INT8") == 0;
+//     bool fp16 = precision.compare("FP16") == 0;
+//     bool int8 = precision.compare("INT8") == 0;
 
-    // Create builder
-    auto builder = createInferBuilder(logger);
-    auto builderConfig = builder->createBuilderConfig();
-    // Allow use of FP16 layers when running in INT8
-    if(fp16 || int8) builderConfig->setFlag(BuilderFlag::kFP16);
-    builderConfig->setMaxWorkspaceSize(workspace_size);
+//     // Create builder
+//     auto builder = createInferBuilder(logger);
+//     auto builderConfig = builder->createBuilderConfig();
+//     // Allow use of FP16 layers when running in INT8
+//     if(fp16 || int8) builderConfig->setFlag(BuilderFlag::kFP16);
+//     builderConfig->setMaxWorkspaceSize(workspace_size);
 
-    // Parse ONNX FCN
-    cout << "Building " << precision << " core model..." << endl;
-    const auto flags = 1U << static_cast<uint32_t>(NetworkDefinitionCreationFlag::kEXPLICIT_BATCH);
-    auto network = builder->createNetworkV2(flags);
-    auto parser = createParser(*network, logger);
-    parser->parse(onnx_model, onnx_size);
+//     // Parse ONNX FCN
+//     cout << "Building " << precision << " core model..." << endl;
+//     const auto flags = 1U << static_cast<uint32_t>(NetworkDefinitionCreationFlag::kEXPLICIT_BATCH);
+//     auto network = builder->createNetworkV2(flags);
+//     auto parser = createParser(*network, logger);
+//     parser->parse(onnx_model, onnx_size);
 
-    auto input = network->getInput(0);
-    auto inputDims = input->getDimensions();
+//     auto input = network->getInput(0);
+//     auto inputDims = input->getDimensions();
 
-    std::unique_ptr<Int8EntropyCalibrator> calib;
-    if (int8) {
-        builderConfig->setFlag(BuilderFlag::kINT8);
-        ImageStream stream(batch, inputDims, calibration_images);
-        calib = std::unique_ptr<Int8EntropyCalibrator>(new Int8EntropyCalibrator(stream, model_name, calibration_table));
-        builderConfig->setInt8Calibrator(calib.get());
-    }
+//     std::unique_ptr<Int8EntropyCalibrator> calib;
+//     if (int8) {
+//         builderConfig->setFlag(BuilderFlag::kINT8);
+//         ImageStream stream(batch, inputDims, calibration_images);
+//         calib = std::unique_ptr<Int8EntropyCalibrator>(new Int8EntropyCalibrator(stream, model_name, calibration_table));
+//         builderConfig->setInt8Calibrator(calib.get());
+//     }
 
-    // Add decode plugins
-    cout << "Building accelerated plugins..." << endl;
-    vector<ITensor *> scores, boxes, classes;
-    auto nbOutputs = network->getNbOutputs();
-    for (int i = 0; i < nbOutputs / 2; i++) {
-        auto classOutput = network->getOutput(i);
-        auto boxOutput = network->getOutput(nbOutputs / 2 + i);
-        auto outputDims = classOutput->getDimensions();
+//     // Add decode plugins
+//     cout << "Building accelerated plugins..." << endl;
+//     vector<ITensor *> scores, boxes, classes;
+//     auto nbOutputs = network->getNbOutputs();
+//     for (int i = 0; i < nbOutputs / 2; i++) {
+//         auto classOutput = network->getOutput(i);
+//         auto boxOutput = network->getOutput(nbOutputs / 2 + i);
+//         auto outputDims = classOutput->getDimensions();
 
-        int scale = inputDims.d[2] / outputDims.d[2];
-        auto decodePlugin = DecodePlugin(score_thresh, top_n, anchors[i], scale);
-        auto decodeRotatePlugin = DecodeRotatePlugin(score_thresh, top_n, anchors[i], scale);
-        vector<ITensor *> inputs = {classOutput, boxOutput};
-        auto layer = (!rotated) ? network->addPluginV2(inputs.data(), inputs.size(), decodePlugin) \
-                    : network->addPluginV2(inputs.data(), inputs.size(), decodeRotatePlugin);
-        scores.push_back(layer->getOutput(0));
-        boxes.push_back(layer->getOutput(1));
-        classes.push_back(layer->getOutput(2));
-    }
+//         int scale = inputDims.d[2] / outputDims.d[2];
+//         auto decodePlugin = DecodePlugin(score_thresh, top_n, anchors[i], scale);
+//         auto decodeRotatePlugin = DecodeRotatePlugin(score_thresh, top_n, anchors[i], scale);
+//         vector<ITensor *> inputs = {classOutput, boxOutput};
+//         auto layer = (!rotated) ? network->addPluginV2(inputs.data(), inputs.size(), decodePlugin) \
+//                     : network->addPluginV2(inputs.data(), inputs.size(), decodeRotatePlugin);
+//         scores.push_back(layer->getOutput(0));
+//         boxes.push_back(layer->getOutput(1));
+//         classes.push_back(layer->getOutput(2));
+//     }
 
-    // Cleanup outputs
-    for (int i = 0; i < nbOutputs; i++) {
-        auto output = network->getOutput(0);
-        network->unmarkOutput(*output);
-    }
+//     // Cleanup outputs
+//     for (int i = 0; i < nbOutputs; i++) {
+//         auto output = network->getOutput(0);
+//         network->unmarkOutput(*output);
+//     }
 
-    // Concat tensors from each feature map
-    vector<ITensor *> concat;
-    for (auto tensors : {scores, boxes, classes}) {
-        auto layer = network->addConcatenation(tensors.data(), tensors.size());
-        concat.push_back(layer->getOutput(0));
-    }
+//     // Concat tensors from each feature map
+//     vector<ITensor *> concat;
+//     for (auto tensors : {scores, boxes, classes}) {
+//         auto layer = network->addConcatenation(tensors.data(), tensors.size());
+//         concat.push_back(layer->getOutput(0));
+//     }
     
-    // Add NMS plugin
-    auto nmsPlugin = NMSPlugin(nms_thresh, detections_per_im);
-    auto nmsRotatePlugin = NMSRotatePlugin(nms_thresh, detections_per_im);
-    auto layer = (!rotated) ? network->addPluginV2(concat.data(), concat.size(), nmsPlugin) \
-                : network->addPluginV2(concat.data(), concat.size(), nmsRotatePlugin);
-    vector<string> names = {"scores", "boxes", "classes"};
-    for (int i = 0; i < layer->getNbOutputs(); i++) {
-        auto output = layer->getOutput(i);
-        network->markOutput(*output);
-        output->setName(names[i].c_str());
-    }
+//     // Add NMS plugin
+//     auto nmsPlugin = NMSPlugin(nms_thresh, detections_per_im);
+//     auto nmsRotatePlugin = NMSRotatePlugin(nms_thresh, detections_per_im);
+//     auto layer = (!rotated) ? network->addPluginV2(concat.data(), concat.size(), nmsPlugin) \
+//                 : network->addPluginV2(concat.data(), concat.size(), nmsRotatePlugin);
+//     vector<string> names = {"scores", "boxes", "classes"};
+//     for (int i = 0; i < layer->getNbOutputs(); i++) {
+//         auto output = layer->getOutput(i);
+//         network->markOutput(*output);
+//         output->setName(names[i].c_str());
+//     }
 
-    // Build engine
-    cout << "Applying optimizations and building TRT CUDA engine..." << endl;
-    _engine = builder->buildEngineWithConfig(*network, *builderConfig);
+//     // Build engine
+//     cout << "Applying optimizations and building TRT CUDA engine..." << endl;
+//     _engine = builder->buildEngineWithConfig(*network, *builderConfig);
 
-    // Housekeeping
-    parser->destroy();
-    network->destroy();
-    builderConfig->destroy();
-    builder->destroy();
-}
+//     // Housekeeping
+//     parser->destroy();
+//     network->destroy();
+//     builderConfig->destroy();
+//     builder->destroy();
+// }
 
-void Engine::save(const string &path) {
-    cout << "Writing to " << path << "..." << endl;
-    auto serialized = _engine->serialize();
-    ofstream file(path, ios::out | ios::binary);
-    file.write(reinterpret_cast<const char*>(serialized->data()), serialized->size());
+// void Engine::save(const string &path) {
+//     cout << "Writing to " << path << "..." << endl;
+//     auto serialized = _engine->serialize();
+//     ofstream file(path, ios::out | ios::binary);
+//     file.write(reinterpret_cast<const char*>(serialized->data()), serialized->size());
 
-    serialized->destroy();    
-}
+//     serialized->destroy();    
+// }
 
 void Engine::infer(vector<void *> &buffers) {
     _context->enqueueV2(buffers.data(), _stream, nullptr);
