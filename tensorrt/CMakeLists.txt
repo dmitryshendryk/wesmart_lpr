@@ -87,7 +87,9 @@ add_library(trt_engine SHARED
   ./csrc/calibrator.h
 )
 
-
+set_target_properties(trt_engine PROPERTIES
+  CUDA_RESOLVE_DEVICE_SYMBOLS ON
+)
 
 
 target_link_libraries(
