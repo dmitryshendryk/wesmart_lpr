@@ -15,6 +15,9 @@ find_library(NVONNXPARSERS NAMES nvonnxparser)
 find_library(NVPLUGIN NAMES libnvinfer_plugin.so)
 find_package(CUDA  REQUIRED)
 
+list(APPEND CUDA_NVCC_FLAGS "--expt-extended-lambda")
+
+
 enable_language(CUDA)
 find_package(OpenCV REQUIRED)
 
