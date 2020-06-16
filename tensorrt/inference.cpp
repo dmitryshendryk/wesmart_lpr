@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
 	cout << "inputSize[1]" << inputSize[1] << endl;
 	// cout << "Ouput size" << data_results.size() << endl;
 
-	for (int i = 0; i < 50; i++) {
+	for (int i = 0; i < 500; i++) {
 		cout << data_results[i] << " ";
 	}
 	// for (int i = 0; i < num_det; i++) {
