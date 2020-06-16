@@ -94,7 +94,10 @@ int main(int argc, char *argv[]) {
 	// cudaMemcpy(classes.get(), classes_d, sizeof(float) * num_det, cudaMemcpyDeviceToHost);
 	Mat m = Mat(inputSize[0], inputSize[1], CV_32F);
 
-	cudaMemcpy(m.data, data_d, 1 * inputSize[0] * inputSize[1] * sizeof(float), cudaMemcpyDeviceToHost);
+	void *mask_d
+	cudaMalloc(&mask_d, 1 * inputSize[0] * inputSize[1] * sizeof(float));
+
+	cudaMemcpy(m.data, mask_d, 1 * inputSize[0] * inputSize[1] * sizeof(float), cudaMemcpyDeviceToHost);
 	cudaFree(data_d);
 	// cudaFree(boxes_d);
 	// cudaFree(classes_d);
@@ -103,7 +106,7 @@ int main(int argc, char *argv[]) {
 	cout << "inputSize[1]" << inputSize[1] << endl;
 	cv::Mat bgr;
 	cvtColor(m, bgr, CV_GRAY2BGR);
-	cout << "M = " << endl << " "  << m << endl << endl;
+	// cout << "M = " << endl << " "  << m << endl << endl;
 
 	// Write image
 	string out_file = argc == 4 ? string(argv[3]) : "detections.png";
