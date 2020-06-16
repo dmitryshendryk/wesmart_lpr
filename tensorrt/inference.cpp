@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
 	cout << "inputSize[1]" << inputSize[1] << endl;
 	cout << "Ouput size" << data_results.size() << endl;
 
-	vector<int>::iterator ptr; 
+	vector<float[]>::iterator ptr; 
 	for (ptr = data_results.begin(); ptr < data_results.end(); ptr++) 
         cout << *ptr << " "; 
 	// for (int i = 0; i < num_det; i++) {
