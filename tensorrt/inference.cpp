@@ -95,7 +95,6 @@ int main(int argc, char *argv[]) {
 	// cudaMemcpy(classes.get(), classes_d, sizeof(float) * num_det, cudaMemcpyDeviceToHost);
 	Mat m = Mat(inputSize[0], inputSize[1], CV_32F);
 
-	void *mask_d
 	
 
 	cudaMemcpy(m.data, mask_d, 1 * inputSize[0] * inputSize[1] * sizeof(float), cudaMemcpyDeviceToHost);
