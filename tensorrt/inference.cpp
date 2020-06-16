@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 	}        
 
 	// Create device buffers
-	void *data_d, *scores_d, *boxes_d, *classes_d, *mask_d;
+	void *data_d, *mask_d;
 	auto num_det = engine.getMaxDetections();
 	cudaMalloc(&data_d, 3 * inputSize[0] * inputSize[1] * sizeof(float));
 	// cudaMalloc(&scores_d, num_det * sizeof(float));
