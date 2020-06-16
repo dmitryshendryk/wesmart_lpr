@@ -87,11 +87,11 @@ int main(int argc, char *argv[]) {
 	unique_ptr<float[]> classes(new float[num_det]);
 
 	// vector<float[]> *data_results = new vector<float[]>[dataSize];
-	unique_ptr<float[]> data_results(float[1 * inputSize[0] * inputSize[1] * sizeof(float)]);
+	unique_ptr<float[]> data_results(new float[1 * inputSize[0] * inputSize[1]]);
 	// cudaMemcpy(scores.get(), scores_d, sizeof(float) * num_det, cudaMemcpyDeviceToHost);
 	// cudaMemcpy(boxes.get(), boxes_d, sizeof(float) * num_det * 4, cudaMemcpyDeviceToHost);
 	// cudaMemcpy(classes.get(), classes_d, sizeof(float) * num_det, cudaMemcpyDeviceToHost);
-	cudaMemcpy(data_results.get(), data_d, 1 * inputSize[0] * inputSize[1] * sizeof(float), cudaMemcpyDeviceToHost);
+	cudaMemcpy(data_results.get(), data_d, 1 * inputSize[0] * inputSize[1], cudaMemcpyDeviceToHost);
 	cudaFree(data_d);
 	// cudaFree(boxes_d);
 	// cudaFree(classes_d);
@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
 	cout << "inputSize[1]" << inputSize[1] << endl;
 	// cout << "Ouput size" << data_results.size() << endl;
 
-	for (int i = 0; i < 1 * inputSize[0] * inputSize[1] * sizeof(float); i++) {
+	for (int i = 0; i < 1 * inputSize[0] * inputSize[1] ; i++) {
 		cout << data_results[i] << " ";
 	}
 	// for (int i = 0; i < num_det; i++) {
