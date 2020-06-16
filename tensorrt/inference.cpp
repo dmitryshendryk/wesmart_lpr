@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
 	// cudaMemcpy(scores.get(), scores_d, sizeof(float) * num_det, cudaMemcpyDeviceToHost);
 	// cudaMemcpy(boxes.get(), boxes_d, sizeof(float) * num_det * 4, cudaMemcpyDeviceToHost);
 	// cudaMemcpy(classes.get(), classes_d, sizeof(float) * num_det, cudaMemcpyDeviceToHost);
-	Mat m = Mat(inputSize[1], inputSize[0], CV_32F);
+	Mat m = Mat(inputSize[0], inputSize[1], CV_32F);
 
 	cudaMemcpy(m.data, data_d, 1 * inputSize[0] * inputSize[1] * sizeof(float), cudaMemcpyDeviceToHost);
 	cudaFree(data_d);
@@ -100,31 +100,8 @@ int main(int argc, char *argv[]) {
 	cout << "Channels" << channels << endl;
 	cout << "inputSize[0]" << inputSize[0] << endl;
 	cout << "inputSize[1]" << inputSize[1] << endl;
-	// cout << "Ouput size" << data_results.size() << endl;
-
-	// vector<float> vec_to_img;
-	// for (int i = 0; i < 1 * inputSize[0] * inputSize[1] ; i++) {
-	// 	cout << data_results[i] << " ";
-	// 	vec_to_img.push_back(data_results[i])
-	// }
-	// memcpy(m.data, vec_to_img.data(), vec_to_img.size()*sizeof(float)); 
-
-	// for (int i = 0; i < num_det; i++) {
-	// 	// Show results over confidence threshold
-	// 	if (scores[i] >= 0.3f) {
-	// 		float x1 = boxes[i*4+0];
-	// 		float y1 = boxes[i*4+1];
-	// 		float x2 = boxes[i*4+2];
-	// 		float y2 = boxes[i*4+3];
-	// 		cout << "Found box {" << x1 << ", " << y1 << ", " << x2 << ", " << y2
-	// 			<< "} with score " << scores[i] << " and class " << classes[i] << endl;
-
-	// 		// Draw bounding box on image
-	// 		cv::rectangle(image, Point(x1, y1), Point(x2, y2), cv::Scalar(0, 255, 0));
-	// 	}
-	// }
-
-	// // Write image
+	
+	// Write image
 	string out_file = argc == 4 ? string(argv[3]) : "detections.png";
 	cout << "Saving result to " << out_file << endl;
 	imwrite(out_file, m);
