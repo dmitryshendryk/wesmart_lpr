@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
 	unique_ptr<float[]> boxes(new float[num_det * 4]);
 	unique_ptr<float[]> classes(new float[num_det]);
 
-	vector<float[]> *data_results = new vector<float>[dataSize];
+	vector<float[]> *data_results = new vector<float[]>[dataSize];
 
 	// cudaMemcpy(scores.get(), scores_d, sizeof(float) * num_det, cudaMemcpyDeviceToHost);
 	// cudaMemcpy(boxes.get(), boxes_d, sizeof(float) * num_det * 4, cudaMemcpyDeviceToHost);
@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
 	cout << "inputSize[1]" << inputSize[1] << endl;
 	cout << "Ouput size" << data_results.size() << endl;
 
-	vector<float[]>::iterator ptr; 
+	vector<float>::iterator ptr; 
 	for (ptr = data_results.begin(); ptr < data_results.end(); ptr++) 
         cout << *ptr << " "; 
 	// for (int i = 0; i < num_det; i++) {
