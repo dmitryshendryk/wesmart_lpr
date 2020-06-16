@@ -54,6 +54,7 @@ int main(int argc, char *argv[]) {
 		}
 	}        
 
+	// Create device buffers
 	void *data_d, *scores_d, *boxes_d, *classes_d;
 	auto num_det = engine.getMaxDetections();
 	cudaMalloc(&data_d, 3 * inputSize[0] * inputSize[1] * sizeof(float));
@@ -61,6 +62,7 @@ int main(int argc, char *argv[]) {
 	// cudaMalloc(&boxes_d, num_det * 4 * sizeof(float));
 	// cudaMalloc(&classes_d, num_det * sizeof(float));
 
+	// Copy image to device
 	size_t dataSize = data.size() * sizeof(float);
 	cudaMemcpy(data_d, data.data(), dataSize, cudaMemcpyHostToDevice);
 
@@ -79,20 +81,22 @@ int main(int argc, char *argv[]) {
 
 	// cudaFree(data_d);
 
+	// Get back the bounding boxes
 	unique_ptr<float[]> scores(new float[num_det]);
 	unique_ptr<float[]> boxes(new float[num_det * 4]);
 	unique_ptr<float[]> classes(new float[num_det]);
-	cudaMemcpy(data.get(), data_d, dataSize, cudaMemcpyDeviceToHost);
+
+	unique_ptr<float[]> data_results(new float[dataSize]);
+
+	// cudaMemcpy(scores.get(), scores_d, sizeof(float) * num_det, cudaMemcpyDeviceToHost);
 	// cudaMemcpy(boxes.get(), boxes_d, sizeof(float) * num_det * 4, cudaMemcpyDeviceToHost);
 	// cudaMemcpy(classes.get(), classes_d, sizeof(float) * num_det, cudaMemcpyDeviceToHost);
-
+	cudaMemcpy(data_results.get(), data_d, dataSize, cudaMemcpyDeviceToHost);
 	cudaFree(data_d);
-
-	for (std::vector<float>::const_iterator i = data.begin(); i != data.end(); ++i)
-    	std::cout << *i << ' ';
 	// cudaFree(boxes_d);
 	// cudaFree(classes_d);
-
+	for (std::vector<float>::const_iterator i = data_results.begin(); i != data_results.end(); ++i)
+    	std::cout << *i << ' ';
 	// for (int i = 0; i < num_det; i++) {
 	// 	// Show results over confidence threshold
 	// 	if (scores[i] >= 0.3f) {
@@ -108,7 +112,7 @@ int main(int argc, char *argv[]) {
 	// 	}
 	// }
 
-	// Write image
+	// // Write image
 	// string out_file = argc == 4 ? string(argv[3]) : "detections.png";
 	// cout << "Saving result to " << out_file << endl;
 	// imwrite(out_file, image);
