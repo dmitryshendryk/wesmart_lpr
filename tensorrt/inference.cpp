@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
 	// cudaMemcpy(scores.get(), scores_d, sizeof(float) * num_det, cudaMemcpyDeviceToHost);
 	// cudaMemcpy(boxes.get(), boxes_d, sizeof(float) * num_det * 4, cudaMemcpyDeviceToHost);
 	// cudaMemcpy(classes.get(), classes_d, sizeof(float) * num_det, cudaMemcpyDeviceToHost);
-	cudaMemcpy(data_results.data(), data_d, dataSize, cudaMemcpyDeviceToHost);
+	cudaMemcpy(data_results.get(), data_d, dataSize, cudaMemcpyDeviceToHost);
 	cudaFree(data_d);
 	// cudaFree(boxes_d);
 	// cudaFree(classes_d);
