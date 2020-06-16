@@ -56,12 +56,13 @@ int main(int argc, char *argv[]) {
 	}        
 
 	// Create device buffers
-	void *data_d, *scores_d, *boxes_d, *classes_d;
+	void *data_d, *scores_d, *boxes_d, *classes_d, *mask_d;
 	auto num_det = engine.getMaxDetections();
 	cudaMalloc(&data_d, 3 * inputSize[0] * inputSize[1] * sizeof(float));
 	cudaMalloc(&scores_d, num_det * sizeof(float));
 	cudaMalloc(&boxes_d, num_det * 4 * sizeof(float));
 	cudaMalloc(&classes_d, num_det * sizeof(float));
+	cudaMalloc(&mask_d, 1 * inputSize[0] * inputSize[1] * sizeof(float));
 
 	// Copy image to device
 	size_t dataSize = data.size() * sizeof(float);
@@ -71,7 +72,7 @@ int main(int argc, char *argv[]) {
 	cout << "Running inference..." << endl;
 	const int count = 100;
 	auto start = chrono::steady_clock::now();
- 	vector<void *> buffers = { data_d, scores_d, boxes_d, classes_d };
+ 	vector<void *> buffers = { data_d, scores_d, boxes_d, classes_d, mask_d };
 	// vector<void *> buffers = { data_d};
 	for (int i = 0; i < count; i++) {
 		engine.infer(buffers);
@@ -95,7 +96,7 @@ int main(int argc, char *argv[]) {
 	Mat m = Mat(inputSize[0], inputSize[1], CV_32F);
 
 	void *mask_d
-	cudaMalloc(&mask_d, 1 * inputSize[0] * inputSize[1] * sizeof(float));
+	
 
 	cudaMemcpy(m.data, mask_d, 1 * inputSize[0] * inputSize[1] * sizeof(float), cudaMemcpyDeviceToHost);
 	cudaFree(data_d);
