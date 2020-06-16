@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
 	// cudaMemcpy(scores.get(), scores_d, sizeof(float) * num_det, cudaMemcpyDeviceToHost);
 	// cudaMemcpy(boxes.get(), boxes_d, sizeof(float) * num_det * 4, cudaMemcpyDeviceToHost);
 	// cudaMemcpy(classes.get(), classes_d, sizeof(float) * num_det, cudaMemcpyDeviceToHost);
-	Mat m = Mat(inputSize[0], inputSize[1], CV_32F);
+	Mat m = Mat(inputSize[1], inputSize[0], CV_32F);
 
 	
 
