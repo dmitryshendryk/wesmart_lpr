@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
 	unique_ptr<float[]> classes(new float[num_det]);
 
 	// vector<float[]> *data_results = new vector<float[]>[dataSize];
-	unique_ptr<float[]> data_results(new float[num_det]);
+	unique_ptr<float[]> data_results(new float[dataSize]);
 	// cudaMemcpy(scores.get(), scores_d, sizeof(float) * num_det, cudaMemcpyDeviceToHost);
 	// cudaMemcpy(boxes.get(), boxes_d, sizeof(float) * num_det * 4, cudaMemcpyDeviceToHost);
 	// cudaMemcpy(classes.get(), classes_d, sizeof(float) * num_det, cudaMemcpyDeviceToHost);
