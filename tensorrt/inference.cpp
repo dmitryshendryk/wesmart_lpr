@@ -95,8 +95,10 @@ int main(int argc, char *argv[]) {
 	cudaFree(data_d);
 	// cudaFree(boxes_d);
 	// cudaFree(classes_d);
-	for (std::vector<float>::const_iterator i = data_results.begin(); i != data_results.end(); ++i)
-    	std::cout << *i << ' ';
+
+	for (int i = 0; i < dataSize; i++) {
+		cout << data_results[i] << endl;
+	}
 	// for (int i = 0; i < num_det; i++) {
 	// 	// Show results over confidence threshold
 	// 	if (scores[i] >= 0.3f) {
