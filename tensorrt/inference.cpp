@@ -107,7 +107,7 @@ int main(int argc, char *argv[]) {
 	cv::Mat bgr;
 	// cvtColor(m, bgr, CV_GRAY2BGR);
 	// cout << "M = " << endl << " "  << m << endl << endl;
-	cv::Size s = mat.size();
+	cv::Size s = m.size();
 	cout << "M = " << endl << " "  << s.height << endl << endl;
 	cout << "M = " << endl << " "  << s.width << endl << endl;
 
