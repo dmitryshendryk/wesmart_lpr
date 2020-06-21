@@ -107,7 +107,9 @@ int main(int argc, char *argv[]) {
 	cv::Mat bgr;
 	// cvtColor(m, bgr, CV_GRAY2BGR);
 	// cout << "M = " << endl << " "  << m << endl << endl;
-	cout << "M = " << endl << " "  << m.size() << endl << endl;
+	cv::Size s = mat.size();
+	cout << "M = " << endl << " "  << s.height << endl << endl;
+	cout << "M = " << endl << " "  << s.width << endl << endl;
 
 	// Write image
 	string out_file = argc == 4 ? string(argv[3]) : "detections.png";
