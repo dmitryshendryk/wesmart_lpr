@@ -114,7 +114,7 @@ int main(int argc, char *argv[]) {
 	// Write image
 	string out_file = argc == 4 ? string(argv[3]) : "detections.png";
 	cout << "Saving result to " << out_file << endl;
-	imwrite(out_file, bgr);
+	imwrite(out_file, m);
 	
 	return 0;
 }
