@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
 	cout << "inputSize[1]" << inputSize[1] << endl;
 	cv::Mat bgr;
 	// cvtColor(m, bgr, CV_GRAY2BGR);
-	cout << "M = " << endl << " "  << m << endl << endl;
+	// cout << "M = " << endl << " "  << m << endl << endl;
 	cout << "M = " << endl << " "  << m.size() << endl << endl;
 
 	// Write image
