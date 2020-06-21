@@ -56,10 +56,10 @@ int main(int argc, char *argv[]) {
 	}        
 
 	// Create device buffers
-	void *data_d, *mask_d;
+	void *data_d, *scores_d, *mask_d;
 	auto num_det = engine.getMaxDetections();
 	cudaMalloc(&data_d, 3 * inputSize[0] * inputSize[1] * sizeof(float));
-	// cudaMalloc(&scores_d, num_det * sizeof(float));
+	cudaMalloc(&scores_d, num_det * sizeof(float));
 	// cudaMalloc(&boxes_d, num_det * 4 * sizeof(float));
 	// cudaMalloc(&classes_d, num_det * sizeof(float));
 	cudaMalloc(&mask_d, 1 * inputSize[0] * inputSize[1] * sizeof(float));
@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
 	cout << "Running inference..." << endl;
 	const int count = 100;
 	auto start = chrono::steady_clock::now();
- 	vector<void *> buffers = { data_d, mask_d };
+ 	vector<void *> buffers = { data_d, scores_d, mask_d };
 	// vector<void *> buffers = { data_d};
 	for (int i = 0; i < count; i++) {
 		engine.infer(buffers);
@@ -87,6 +87,8 @@ int main(int argc, char *argv[]) {
 	unique_ptr<float[]> scores(new float[num_det]);
 	unique_ptr<float[]> boxes(new float[num_det * 4]);
 	unique_ptr<float[]> classes(new float[num_det]);
+
+	unique_ptr<float[]> mask_ptr(new float[ 1 * inputSize[0] * inputSize[1] * sizeof(float)]);
 
 	// vector<float[]> *data_results = new vector<float[]>[dataSize];
 	// unique_ptr<float[]> data_results(new float[1 * inputSize[0] * inputSize[1]]);
