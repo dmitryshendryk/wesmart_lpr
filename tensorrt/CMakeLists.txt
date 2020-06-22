@@ -104,6 +104,7 @@ add_library(${PROJECT_NAME} SHARED
   ./csrc/ioHelper.h
   ./csrc/ioHelper.cpp 
   ./csrc/cudaWrapper.h
+  /home/wesmart/archiconda3/envs/pytorch/lib/python3.6/site-packages/onnx/onnx_pb.h
   ${INCLUDE_DIR}/logger.cpp
   ${INCLUDE_DIR}/logger.h
   ${INCLUDE_DIR}/buffers.h
