@@ -29,7 +29,7 @@
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 #include <iterator>
-#include <onnx/onnx_pb.h>
+#include </home/wesmart/archiconda3/envs/pytorch/lib/python3.6/site-packages/onnx/onnx_pb.h>
 #include "ioHelper.h"
 using namespace std;
 
