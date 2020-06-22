@@ -99,6 +99,9 @@ add_library(${PROJECT_NAME} SHARED
   ./csrc/engine.h
   ./csrc/engine.cpp
   ./csrc/calibrator.h
+  ./csrc/ioHelper.h
+  ./csrc/ioHelper.cpp 
+  ./csrc/cudaWrapper.h
   ${INCLUDE_DIR}/logger.cpp
   ${INCLUDE_DIR}/logger.h
   ${INCLUDE_DIR}/buffers.h
@@ -127,6 +130,18 @@ add_library(${PROJECT_NAME} SHARED
 #         trt_engine)
 
 
+
+add_executable(simpleOnnx_1 simpleOnnx_1.cpp)
+target_link_libraries(simpleOnnx_1 
+        ${PROJECT_NAME}
+        ${CUDA_LIBRARIES} 
+        ${INCLUDE_DIR} 
+        ${NVINFER} 
+        ${NVPARSERS} 
+        ${NVONNXPARSERS} 
+        ${NVPLUGIN}
+        ${GSTLIBS_LIBRARIES}
+        ${OpenCV_LIBS})
 
 add_executable(unet_model trtexec.cpp)
 target_link_libraries(unet_model 
